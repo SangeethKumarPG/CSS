@@ -1,20 +1,94 @@
- body{
-    font-family: "Montserrat", sans-serif;
+ * {
+   box-sizing: border-box;
+
  }
+
+ body {
+   font-family: "Montserrat", sans-serif;
+   margin: 0;
+ }
+
  #product-overview {
-     background: #ff1b1f;
+   background: url("freedom.jpg");
+   width: 100%;
+   height: 528px;
+   padding: 10px;
  }
 
  #product-overview h1 {
-     color: white;
-     font-family: "Anton", sans-serif;
+   color: white;
+   font-family: "Anton", sans-serif;
  }
 
  .section-title {
-     color: #2ddf5c;
-    font-family: inherit;
+   color: #2ddf5c;
+   font-family: inherit;
  }
 
  /* h1{
     font-family: sans-serif;
  } */
+ .main-header {
+   background-color: #2ddf5c;
+   padding: 8px 16px;
+   width: 100%;
+ }
+
+ .main-nav__item {
+   display: inline-block;
+   /* padding:10px; */
+ }
+
+ .main-header>div {
+   display: inline-block;
+   vertical-align: middle;
+ }
+
+ .main-header__brand {
+   color: #0e4f1f;
+   text-decoration: none;
+   font-weight: bold;
+   font-size: 22px;
+ }
+
+ .main-nav {
+   display: inline-block;
+   text-align: right;
+   width: calc(100% - 74px);
+   vertical-align: middle;
+ }
+
+ .main-nav__item {
+   margin: 0;
+   padding: 0;
+   list-style: none;
+ }
+
+ .main-nav__item a {
+   text-decoration: none;
+   color: #0e4f1f;
+   margin: 0 16px;
+   font-weight: bold;
+   padding: 3px 0;
+ }
+
+ .main-nav__item a:hover,
+ .main-nav__item a:active {
+   color: white;
+   border-bottom: 5px solid white;
+
+ }
+
+ .main-nav__item--cta a{
+  color:white;
+  background-color: #ff1b68;
+  padding: 8px 16px;
+  border-radius: 8px;
+ }
+
+ .main-nav__item--cta a:hover,
+ .main-nav__item--cta a:active {
+  color:red;
+  background-color: white;
+  border: none;
+ }

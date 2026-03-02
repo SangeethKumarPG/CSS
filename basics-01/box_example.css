@@ -1,0 +1,20 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.main-div{
+    padding: 10px 5px 6px 8px;
+    border: 1px solid black;
+    margin: 10x 4px 3px 6px;
+    height: 300px;
+    width: 48%;
+    display: inline-block;
+}
+
+.first-div{
+    display: none;
+}
+
+.last-div:hover{
+    background-color: blueviolet;
+}
