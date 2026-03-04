@@ -449,3 +449,48 @@ a:not(.active){
 to select anchor tags which does not have the class `active`. Use this pseudo selector with caution because it can cause problems with your styles if you make mistakes. Also, it is less performant.
 
 Some css features are not supported by some browsers. You can check the mdn reference of the css property to check the support in various browsers. 
+
+We can use the `box-shadow` property to add a drop shadow or an inset shadow to an element. We specify the values for x axis, y axis, blur, spread and shadow color. You can also skip the spread and blur which will give you a bright shadow which ends after the specified pixels on the x and y axis. You can specify any color you want for shadow. We can directly specify the color or hex code or use a color function. Color functions are an alternate way for defining colors. For example we can use `rgb()` which let's us define red, green and blue values. The value ranges are from 0 and 255\. Where 0 indicates the absence of that color and 255 indicates maximum intensity.   
+There is also the` rgba()` function which let's you specify the alpha channel. The alpha channel specifies the transparency of the color. 1 means fully opaque and 0 means fully transparent. eg:  
+
+```javaScript
+.plan--highlighted {
+    background-color: #19b84c;
+    color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+  }
+```
+
+We use the `border-radius` property to round the edges of an element. We specify the values like top left, top right, bottom right and bottom left(like clock wise direction). If you want you can also specify equal border radius to all corners.   
+eg:  
+` border-radius: 8px;`   
+
+Some elements like buttons have styles automatically applied by browser. Even though we had set a font family for our elements in the css, this will not be applied, they will be overridden by the browser. To fix this we can use use the `inherit `value for the font property which prioritizes the font we had set. 
+
+We can set the `cursor `property to change the cursor when the mouse cursor is above that element.
+
+When we click on the button we get a blue outline which is provided by the browser by default. We can select an element like button in the developer tools and if we select the :hov we can force the state of the element like making it active, focus, hovered or visited. When the element is focused it will have the outline. It is similar to the border but it is not part of the box model. It is applied before the margin and after the border. We can style this using the `outline `property. We need to use the `:focus `pseudo selector for that. 
+
+We can define the `border-radius` to `50%` to create a circle. Also make sure that we set the width and height equally for the element.  
+We can use the `margin `property to center an element. We can set the margin to `auto ` , which will automatically fill the available space to the left and right equally to center the element horizontally.
+
+We can use `float `property to position some elements differently in your document flow. Float means that you override the default positioning and tells the browser to push the element to the left or right of the page. If you add a float property to the element it will be marked out of document flow. Due to this we don't often use this. It is useful when we need to position an image in a text. The surrounding text elements will respond to float but the other block level elements will not. So to avoid unexpected overlaps we should explicitly tell other elements that the space is reserved for the float and they should respect it. We can do this by adding an additional helper div after the section which we want to float. We can define it any class name and provide the `clear `property and set it's value as `both` . This will clear the floats of both left and right after the element which we are floating.
+
+The example will look like:
+
+```javaScript
+.clearfix{
+    clear:both;
+}
+```
+
+  
+```javaScript
+#free{
+    background: rgba(234,252,237, 0.95);
+    float:right;
+    border-right: none;
+    border-left: 4px solid #0e4f1f;
+    text-align: right;
+}
+```
