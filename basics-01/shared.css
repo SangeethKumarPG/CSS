@@ -12,6 +12,8 @@
       background-color: #2ddf5c;
       padding: 8px 16px;
       width: 100%;
+      position:fixed;
+      z-index: 2;
   }
 
   .main-nav__item {

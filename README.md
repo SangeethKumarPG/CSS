@@ -494,3 +494,113 @@ The example will look like:
     text-align: right;
 }
 ```
+
+The `position `property let's us change the position of an element in the html page. 
+
+The `position `property is automatically applied in the html code with the value `static `which ensures are block level elements are placed according to the document flow. There might be situations where we might need to alter the normal document flow. We can in-fact position any element on anywhere on the screen which can be achieved through the position property. The possible values for the position property are:  
+
+* static
+* absolute
+* relative
+* fixed
+* sticky
+
+We need a value other than static to alter the position of an element. To make the element move to a position we can use `top`, `bottom`, `left `and `right ` properties. We can use the values of these properties with the positioning context to move the elements to the desired locations.
+
+All the positioning values will only be applied if you choose a different value for position other than static. For example if we had:
+
+```javaScript
+        <div class="parent">
+            <div class="child-1">Navigation Bar</div>
+            <div class="child-2">Background Image</div>
+            <div class="child-3">Features</div>
+        </div>
+```
+
+And we apply the `position: fixed` property to the `child-1`, then the div with the class child-1 will sit on the top and will overlap the child-2\. When we specify position fixed we took it out of the document flow. So for all the other elements the child-1 div is non existent. This element will behave like an `inline block` element, which means that we can set the width of the element manually. We can change the position of the div like:
+
+```javaScript
+.parent .child-1{
+  position:fixed;
+  width: 400px;
+  top:100px;
+}
+```
+
+We can also set the top to 0 to see how the element is positioned. If we do so we can see that the element is placed with respect to the viewport.   
+**We can say that if we position the element to fixed the element will be positioned with respect to the viewport(visible area of the browser).** 
+We can make the navigation bar div to position at the top and occupy the entire width by:
+
+```javaScript
+.parent .child-1{
+  position:fixed;
+  width: 100%;
+  top:0;
+  left: 0;
+  margin:0;
+  box-sizing: border-box;
+}
+```
+
+applying the above style.  
+You can use the positioning property to inline elements and block elements.
+
+If we want to add a background image for a page we can create a div at the top page inside of the body tag then add class to it. We can then add the `background `property to the class and use the image. But the problem will be that even if we provide 100% width and 100% height to the div it will not be visible in the screen. If add pixel values to width and height it will work but it is not an elegant solution.   
+We can add the `position `property and make it's value `fixed`. After this we can change the width and height to 100% which will make the image cover the entire viewport. But the image is not optimally sized. Also the image hides all the content of the page.
+
+We can position the element on the x axis with left and right and on the y axis with top and bottom. In our case we need to adjust the z axis position for our page content to be visible over the background image. We can use the `z-index` property for this. This property has different values. By default every element on our website will have `auto `value applied which is equal to 0\. This represents the starting point from a y axis perspective for the elements in our website. If we want to position something above the element we can use incremental values to the respective elements such 1, 2, 3 etc. If you want to position something behind an element we can set the `-1` to the element which we want to push behind. **Adding a z-index property to any element without a position(not static) will have no impact**. 
+
+So we can use like:
+
+```javaScript
+.background {
+    background: url("../images/plans-background.jpg");
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+}
+```
+
+Which will work fine.   
+The order of elements in the html document will matter if 2 elements have the position fixed and a z-index defined. If both the elements have same z-index the element which is placed last will overlap the other.   
+If two elements have distinct z index values the element with higher z index value will placed on the top.
+
+When we used position fixed, and used the top, bottom, left and right values to move an element, it was moving with respect to the viewport. We might be able to position the element wherever we want but that requires a lot of trial and error, also once we position it, it will remain on the same place on the screen. In certain cases we might need to only place the element in a certain div. In those cases we can use the `absolute ` value for the position. We can add this to the element which we want to position and provide it with the position values as required. Then we can add the `relative `position to the parent element on which we want to place our element.
+
+For absolute positioned elements the position is defined based on two cases. 
+
+  
+* If none of the parents has a position property applied, then the positioning context of our element is the html element.
+* If we have any ancestors with position property, then the closest ancestor with the position property applied is the positioning context for that element.
+
+The `relative `positioning will not take our elements out of the document flow. If we apply the relative positioning to the parent element and absolute positioning to the child element then, the child element will be anchored to the parent.   
+The `fixed` and `absolute `position values are comparable, and they will both take the element out of the normal document flow. For fixed value positioning the positioning context is always tied to the viewport. But in case of the absolute positioning the above 2 rules will apply.
+
+Once the element is anchored to a parent element, we can define it's position according to the parent easily.
+
+When we add `relative `positioning to a normal div nothing changes. But, when you add a left or top position values it will change it's position. **The positioning is not fixed based on the viewport here. Because in relative positioning the position context is based on the element itself. Also, the element is not taken off the document flow.** 
+Relative positioning is used in situations where we need to move an element a little bit but, it does not leave the parent. 
+
+In some cases if we use the relative positioning and move the element, the element might move out of the parent. In this case we can use the `overflow `property to the **parent** and set it to `hidden`. This will hide the element if it is outside of the parent. This may be the behavior you want, but this ensures that the elements are not scattered across the website.   
+
+**If we try give the** `**relative** `**positioning to the parent div and push it down and finally add the** `**overflow hidden**` **to the body it will not hide the parent. This is due to a default css behavior. If you apply overflow hidden property to the body element this will simply pass on to the html element. Due to this there will be no impact. If we add overflow hidden to both html and body then it will hide the parent element. It will also work if you set** `**overflow : auto**` **for the html element.** 
+This will only work if the parent is body element.
+
+We can also use `position: sticky` , if we want to keep the position of an element liked a fixed element. We also need to specify either one of the top, bottom, left or right values for this to work. Sticky is a combination of relative and fixed. When we add the either on the top, bottom , left or right when we reach a certain border while scrolling the element will behave like a fixed element. The border is reached depending on the position of the view port.  
+If we set a value for example top to 0, the distance become the distance between the border of the element and viewport.   
+We can specify a distance between the element and the viewport. When we cover that distance the element behaves like a fixed element. The element will stop behaving like fixed as it reaches the end of the content of it's parent element. 
+
+**Stacking context** is a three-dimensional conceptualization in CSS that determines how elements are layered on top of each other along the z-axis (depth).
+
+Each stacking context is an independent layering environment — elements inside it are stacked relative to each other, but **cannot appear above or below elements in other stacking contexts** unless their parent context has a higher stacking order.
+
+> When you apply `position: fixed` (or other positioning) to parent elements, each parent establishes its own **stacking context**. This means:
+> 
+> * Child elements are stacked _relative to each other_ within their parent's stacking context using z-index
+> * A child element's z-index **cannot** override the stacking order of its parent relative to other parents
+> * Even if a child has `z-index: 9999` and a sibling parent has `z-index: 1`, the child will never appear above that sibling parent
+> * To control which parent appears on top, you must adjust the **parent's z-index**, not the child's
+> * The parent with the higher z-index will always appear above parents with lower z-index values, regardless of their children's z-index values
+
+**In short:** Z-index only works within the same stacking context. Parent stacking contexts are independent, so you must compare parent z-index values to determine their layering order.
