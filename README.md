@@ -604,3 +604,105 @@ Each stacking context is an independent layering environment — elements inside
 > * The parent with the higher z-index will always appear above parents with lower z-index values, regardless of their children's z-index values
 
 **In short:** Z-index only works within the same stacking context. Parent stacking contexts are independent, so you must compare parent z-index values to determine their layering order.
+
+#### When `z-index` is **not needed**:
+
+* If there's **no overlap** between positioned elements, stacking order doesn't matter.
+* The **natural stacking order** (elements later in the DOM appear on top) may already give you the desired result.
+* If only **one element** is positioned and others are static, there's no conflict.
+
+#### When `z-index` **is needed**:
+
+* When **multiple positioned elements overlap** and the default stacking order isn't what you want.
+* When a positioned element needs to appear **above or below** another positioned element.
+* When dealing with **dropdowns, modals, tooltips**, or any layered UI components.
+
+The background we used was a shorthand property, for example we can use `background-image` property to set an image background. We can use `background-color` to set a solid color background to the image. If you apply both an image and a solid color as background the image will be displayed in the background. 
+
+The `background-size` property is used to adjust the size of the background. If you set a small value which is smaller than the size of the image, then the background will be multiple smaller copies of the image arranged as a grid. We can also set the width and height of the image like:  
+`background-size: width height;  
+`We can provide pixel values, % values to this. We can also set the first value to `auto `which will automatically set the width. If we specify the width as 100% and does not specify a height, the full width of the container will be taken and the image height will be cropped automatically.   
+We can also set predefined values for the `background-size` property such as `cover`. 
+
+When we set the size to cover, it will look like it set the width of the background to 100% but cover does not actually do that. Cover finds out which part of the container is important (width or height) one to be aligned with your image. Cover is a setting which ensure that your image will fill the entire container. It will even zoom in if you image is smaller than the container.   
+An alternative to this is `contain`, this ensures that the full image is visible in the container. It might result in creating white spaces if the image is smaller than the container.
+
+If you only provide one value the browser will try to keep the aspect ratio of the image, but when we also specify a width and height there are chances that the aspect-ratio of the image will not be maintained.  
+**NOTE:** In some cases if you set the background-size to cover and set an image with very large height than the container, the height of the image will be cropped.
+
+The `background-repeat` is used to repeat the background or remove the repetition of the background image. We can set it to` no-repeat` to remove the repetition when we use a small image. We can use the `repeat-x` to repeat the image on x-axis. Also, we can `repeat-y` which we can use to repeat the image on y-axis. 
+
+We can position the background image with `background-position` property. We can use a couple of different values for this. For example we can use a pixel value to move the image to the right by the specified number of pixels. If we provide 2 pixel values we can use it to move the image from the left and top by the specified number of pixels.   
+We can also use % values, if we specify 1 percentage value you might not be able to see any difference since we have used 100% of the width. But if we use an additional % value we can adjust the position of the image from the y axis. The default value is 50% for the y axis. It means that 50% will be cropped at bottom and 50% will be cropped at the top if the image doesn't fit the container.   
+We can also set the value to `center `which will set it to 50% 50% which means the image will be centered by cropping 50% on the left and right and 50% on the top and bottom. 
+
+We can also use left top values to avoid the cropping. This means that it will use 0% 0%. We can also use `left bottom` which will align the image from left and bottom. We can combine positions and percentages like:  
+`background-position:left 10% bottom 20%;`   
+This gives us full control on how we position our image. 
+
+We can also set multiple images are as background. We have seen about background position which will set the initial position relative to background position layer. `background-position` is only applicable for images.  
+`background-origin` allows us to set a background positioning area.   
+`background-clip` defines weather the background extends underneath border. 
+
+`background-attachment` defines how the scrolling will behave inside of the image. 
+
+`background-origin` is comparable to box sizing. For example we can set a dashed border of 5px to our image container and we can see that there is a small gap on the left and right side of the image. To fix this we can set the `background-origin` to` border-box`. This will stretch the image across the borders. If we add `content-box` as `background-origin` we can see a little bit more white space within the borders. content-box means that the content without border and padding. The default value of `background-origin` is `padding-box`. This means that the container including border and padding but not the border.   
+The cropping is defined by the `background-clip` property. We can also set it to `border-box` which gives the same behavior as before. If we change that to padding-box there will no image behind the border on all sides, i.e the image is clipped after padding. We can also set this to `content-box` to clip it before the padding.   
+`background-clip` will override `background-origin` 
+
+`background-attachment` is used to define how scrolling would behave in a container that has a background image but that is not fixed itself. The values are `scroll`, `fixed`, `local`. `local `defines that the image will scroll with the container. For `scroll `the image will stay in place and the content will scroll over it. For `fixed`, the image will not be fixed to the container but the viewport.   
+This is property which you rarely use.
+
+We can use all of the above properties in the background shorthand property. But this might confuse you because both the background-position and background-size support both percentage and pixel values. Here in the shorthand property the position comes first which is separated by / followed by size.   
+For example:  
+` background: url("freedom.jpg") left 10% bottom 20%/cover; `   
+for 
+
+```javaScript
+  /* background-image: url("freedom.jpg"); */
+  /* background-size: cover; */
+  /* background-position: left 10% bottom 20%; */
+```
+
+The background-size is followed by background-repeat. For origin and clip if you only provide one value then it will be applied for both. If you pass 2 values the first one will set the origin and second one will set the clip.   
+The complete shorthand will look like:  
+` background: url("freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;` Which is equivalent to:
+
+```javaScript
+ /* background-image: url("freedom.jpg"); */
+  /* background-size: cover; */
+  /* background-position: left 10% bottom 20%; */
+  /* background-repeat: no-repeat; */
+  /* background-origin: border-box;
+  background-clip: border-box; */
+```
+
+```javaScript
+By setting a height on the container, the image will not be affected by default. This is because an `<img>` tag uses its intrinsic width and height (the image file's dimensions) regardless of the surrounding container's dimensions.
+ 
+To adjust the image size, you need to target the image using a CSS selector and set its dimensions. You can use pixel values, which always work on images:
+ 
+```css
+img {
+  width: 200px;
+  height: 150px;
+}
+```
+
+However, if you want to use percentage values like `width: 100%`, the behavior depends on the parent element's display property. If the parent is an inline element, percentage values won't work because inline elements don't respect width and height properties. To enable percentage-based sizing, change the parent element to `display: inline-block` or `display: block`. Then, percentage values will be calculated relative to the parent container's dimensions:
+
+```javaScript
+.container {
+  display: inline-block;
+  width: 300px;
+}
+ 
+img {
+  width: 100%; /* 100% of the container's width (300px) */
+}
+```
+
+  
+The customization we had for the background images are not possible for normal images. Background images are bad for accessibility. Use normal image tag whenever you want to place images in your webpage.
+
+If you have an image in a container and image is an inline element, we can get rid of the whitespace between the image and container by adding a `vertical-align:top` to the image. Alternatively we can set the image to `display:block`. 

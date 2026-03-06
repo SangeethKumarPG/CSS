@@ -13,7 +13,8 @@
       padding: 8px 16px;
       width: 100%;
       position:fixed;
-      z-index: 2;
+      z-index: 1;
+      top:0;
   }
 
   .main-nav__item {
@@ -31,6 +32,10 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 22px;
+  }
+
+  .main-header__brand img{
+    height:22px;
   }
 
   .main-nav {

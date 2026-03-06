@@ -1,118 +1,130 @@
+#product-overview {
+  background: url("images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box;
+  /* background-image: url("freedom.jpg"); */
+  /* background-size: cover; */
+  /* background-position: left 10% bottom 20%; */
+  /* background-repeat: no-repeat; */
+  /* background-origin: border-box;
+  background-clip: border-box; */
 
- #product-overview {
-   background: url("freedom.jpg");
-   width: 100%;
-   height: 528px;
-   padding: 10px;
- }
+  /* border: 5px dashed red; */
+  height: 528px;
+  padding: 10px;
+  margin-top: 32px;
+  position: relative;
+}
 
- #product-overview h1 {
-   color: white;
-   font-family: "Anton", sans-serif;
- }
+#product-overview h1 {
+  color: white;
+  font-family: "Anton", sans-serif;
+  position: absolute;
+  bottom: 5%;
+  left: 1%;
+}
 
- .section-title {
-   color: #2ddf5c;
-   font-family: inherit;
-   text-align: center;
- }
+.section-title {
+  color: #2ddf5c;
+  font-family: inherit;
+  text-align: center;
+}
 
- .plan__list{
+.plan__list {
   width: 80%;
   margin: auto;
   text-align: center;
- }
- .plan {
-   background-color: #d5ffdc;
-   text-align: center;
-   padding: 16px;
-   margin: 8px;
-   display: inline-block;
-   width: 30%;
-   vertical-align: middle;
-   /* border-radius: 10px; */
- }
+}
 
- .plan--highlighted {
-   background-color: #19b84c;
-   color: white;
-   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
- }
+.plan {
+  background-color: #d5ffdc;
+  text-align: center;
+  padding: 16px;
+  margin: 8px;
+  display: inline-block;
+  width: 30%;
+  vertical-align: middle;
+  /* border-radius: 10px; */
+}
 
- .plan__annotation {
-   background-color: white;
-   color: #19b84c;
-   padding: 8px;
-   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
-   border-radius: 8px;
- }
+.plan--highlighted {
+  background-color: #19b84c;
+  color: white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
 
- .plan__title {
-   color: #0e4f1f;
- }
+.plan__annotation {
+  background-color: white;
+  color: #19b84c;
+  padding: 8px;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
 
- .plan__price {
-   color: #858585;
- }
+.plan__title {
+  color: #0e4f1f;
+}
 
- .plan--highlighted .plan__title {
-   color: white;
- }
+.plan__price {
+  color: #858585;
+}
 
- .plan--highlighted .plan__price {
-   color: #0e4f1f;
- }
+.plan--highlighted .plan__title {
+  color: white;
+}
 
- .plan__features {
-   list-style: none;
-   margin: 0;
-   padding: 0;
+.plan--highlighted .plan__price {
+  color: #0e4f1f;
+}
 
- }
-
- .plan__features li {
-   padding: 8px 0;
- }
-
-
-
- #key-features {
-   background-color: #ff1b68;
-   margin-top: 80px;
-   padding: 16px;
-
- }
-
- #key-features .section-title {
-   color: white;
-   margin: 32px;
- }
-
- .key-feature__list{
+.plan__features {
   list-style: none;
   margin: 0;
   padding: 0;
- }
 
- .key-feature{
+}
+
+.plan__features li {
+  padding: 8px 0;
+}
+
+
+
+#key-features {
+  background-color: #ff1b68;
+  margin-top: 80px;
+  padding: 16px;
+
+}
+
+#key-features .section-title {
+  color: white;
+  margin: 32px;
+}
+
+.key-feature__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.key-feature {
   display: inline-block;
   width: 30%;
   text-align: center;
   vertical-align: top;
- }
+}
 
- .key-feature__image{
+.key-feature__image {
   background-color: #ffcede;
   width: 128px;
   border: 2px solid #424242;
   border-radius: 50%;
   height: 128px;
   margin: auto;
- }
+}
 
- .key-feature__description{
+.key-feature__description {
   text-align: center;
   font-weight: bold;
   color: white;
   font-size: 20px;
- }
+}
