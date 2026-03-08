@@ -706,3 +706,51 @@ img {
 The customization we had for the background images are not possible for normal images. Background images are bad for accessibility. Use normal image tag whenever you want to place images in your webpage.
 
 If you have an image in a container and image is an inline element, we can get rid of the whitespace between the image and container by adding a `vertical-align:top` to the image. Alternatively we can set the image to `display:block`. 
+
+Gradients (linear and radial) are treated as images. If you are not using shorthand, you will use `background-image` property to set gradients.   
+To set a linear gradient we use the `linear-gradient()` function. The linear gradient function has 2 main arguments, the first one is the direction of the gradient. You can omit it also. The default is `vertical`. For example we can use:  
+`linear-gradient(red, blue); `   
+This is same as:  
+`linear-gradient(to bottom, red, blue);`   
+We can also set it like: `to left bottom` which will start from top right and ends in left bottom.   
+You can also set degrees instead of position like:  
+`30deg `   
+If you set `0deg `it will be from bottom to top. `180deg `would be the default behavior which is from top to bottom.   
+You can also define multiple colors, as many as you want using any of the available methods in css.   
+We can also use transparent, for example we can use like:  
+`linear-gradient(180deg, red, transparent);`   
+This is useful when you have multiple backgrounds on top of each other.
+
+We can also define from where the colors should start, for example if you have 3 colors each color will take up one third of the available space. We can define the percentage values of each color which defines how much space it occupies, for example:  
+`linear-gradient(180deg, red 70%, blue, rgba(0,0,0,0.5);`   
+For the second color we should define a percentage value greater than the first one other wise there will be a hard edge between those colors. The percentage here defines till how much percentage of the element the color should occupy. We can set 70% for red and 80% for blue so that 70% will be occupied by red and from 70-80% blue will be applied.
+
+Radial gradient is another type of gradient. We can create it using `radial-gradient()`. It will create a gradient that starts from a point and spreads to the surrounding space in an elliptical or circular shape. For example we can create like:  
+` background-image: radial-gradient(red, blue);`   
+Which will have an elliptical red center and the surrounding space will be transitioned to blue. We can also define multiple colors.   
+We can also make the colors a perfect circle by setting `circle `as the first argument to the function.  
+We can also set the position of the circle for example we can use:  
+` background-image: radial-gradient(circle at top,red, blue);`   
+This will start the circle from top center of the element. The center of the circle will be at this position.  
+We can also set it to `top left` which will start from the top left.  
+We can also use percentage values like `20% 50%` which will move the circle 20% from left and 50% from top. The first value is the `x-axis` and second value is the `y-axis`. 
+
+We can also use pixels for positioning instead of percentages.  
+We can also set the size of the circle, by specifying the size(in pixels) after the circle. The value which we set here will be width of the shape(circle). This will only work for circle. If we have an ellipsis we should define both the width and height.   
+There are also default keyword values like `farthest-side` , which means that the ending shape will touch the farthest side.   
+We also have `closest-side` which makes sure that the outermost circle touches the closest side.   
+We can use the `corners `also instead of side like `closest-corner`. 
+
+We can also stack multiple backgrounds for an element. When doing so only one solid background color should be used and it should be the bottom most color. You can use how many images as you want though.   
+The colors are read from left to right which means that the first color you specify will be placed on top. You should also separate the images and colors with commas.   
+When we are using a fallback color we should specify that at the end of the background property definition because every image and gradient has it's own separate property, we don't need this for solid color that is why we are moving it to the end.   
+The stacking of backgrounds will only matter if you have a fallback or your top most background has some transparency elements.   
+The background rule will now look like:  
+`background: linear-gradient(to top, rgba(80, 68, 18, 0.6) 10%, transparent), url("images/freedom.jpg") left 10% bottom 20%/cover no-repeat border-box, #ff1b68;` 
+
+The `filter `property let's us change the visual appearance by applying functions like blur, grayscale etc. We can also apply more than one filter if we want.   
+For example if we want to apply a grayscale for our background image we can use the `grayscale() `function for the filter property and set a percentage value to it.   
+eg:  
+` filter: grayscale(40%);` 
+
+Scalable Vector Graphics(SVG) is a popular form of icons/images. We can add SVG code directly with the html file. We can target individual parts of the svg and customize it if we want. We can use properties like fill, stroke, stroke-width etc. 
