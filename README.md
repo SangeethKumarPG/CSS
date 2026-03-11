@@ -754,3 +754,115 @@ eg:
 ` filter: grayscale(40%);` 
 
 Scalable Vector Graphics(SVG) is a popular form of icons/images. We can add SVG code directly with the html file. We can target individual parts of the svg and customize it if we want. We can use properties like fill, stroke, stroke-width etc. 
+
+Using pixel values for font sizes and letting the users increase the page size to increase the font size is not a good idea. Even if the user increase the font size from the browser settings the font size of all the elements will not change in our webpage. If we don't define a font size for our elements the browser will adjust the font size of these elements automatically when you increase the font size of the browser. But if you define a fixed pixel size these sizes will not change. 
+
+Till now we worked with pixels and percentages. In addition to that we have more units in css. We have rem (root element) which we use for setting font size. We also have `em `which can also be used for font size. We have viewport height denoted by `vh `and viewport width `vw`.   
+We should have a clear understanding about which properties which we can use in connection with these units. We should also know how is the size calculated. Which right unit should you use.   
+In our box model we have the content, padding, border and margin. For these we have font-size, padding, border, margin, width and height properties. We also have the top, bottom, left and right properties which we use after position is applied. 
+
+We have absolute lengths which mostly ignore user settings of the browser. For example we can consider the case of pixels. If we define a property value in pixel units users cannot change that. Similar to this we have `cm`, `mm `and more such absolute units. These units should not be used in development. The values such as cm will result in different pixel values because the screen sizes may vary and different screen sizes hold different pixel values.   
+The second category is viewport lengths, they adjust the element sizes according the viewport. We have `vh`, `vw`, `vmin `and `vmax`. These units changes the element sizes automatically according to the viewport.   
+Thirdly we have font relative lengths, they adjust to the default font size. The units that come under this category are `rem `and `em`.  
+Finally we have % units. It is a special case. We should know how box sizes are calculated if we use percentage units. 
+
+We have 3 rules to remember to understand how percentage units work. 
+
+* When an element has `position: fixed`, its containing block is the **viewport** (or the nearest ancestor with a `transform`, `perspective`, or `filter`), not its parent. So if a parent has `width: 100px` and a child has `width: 10%` with `position: fixed`, the child’s width will be 10% of the **viewport width**, not 10px.
+
+* For an absolutely positioned element, the containing block is the nearest ancestor whose `position` value is not `static`. If no such ancestor exists, the element is positioned relative to the **initial containing block** (usually the viewport).  
+Percentage values behave differently depending on the property: **dimensions** like `width` and `height` are calculated relative to the **content box** of the containing block (excluding padding and border), whereas **position offsets** like `top`, `left`, `right`, and `bottom` are calculated relative to the **padding box** of the containing block.
+
+* If your element have a position static or position relative the content box of the ancestor is considered. The ancestor is the closest block level element.
+
+If we have a static positioned element and we set the height of the element in %. This height will depend upon the containing block as we discussed in the previous rule. If we want to create a backdrop in our page, we can set a width and height of 100% for the element we won't be able to see the element. This is an unexpected behavior. When we inspect we can see that the width is set to 100% but the height is getting set as 0\. To fix this we can use the html selector, body selector and set it's height to 100%. This is a work around not a solution. Because now all the other elements are pushed down and the div element occupies the complete height.  
+Alternatively we can use absolute positioning for the element and remove the height declarations for the html and body. This works because when we use position absolute for the element, since there is not parent element with position other than static the percentage values we set as height and width will be relative to the viewport. 
+
+Even in the above case the backdrop is not fully applied to all the elements in the body. To fix that we can change the element's position to fixed. This way the backdrop remains on the top even if we scroll down the page. To fix the margin collapsing issue where the backdrop doesn't cover the top side of the screen we can set the top to 0 and left to 0.
+
+We can add a font-size value in percentages for the html element. For example if we set a font-size of 75% it will only take 75% font size of the browser setting. 
+
+We can also have a `max-width` value in addition to a percentage `width `value. This will let us restrict the maximum width of the element. We can also set a minimum width using `min-width` to restrict the shrinking of an element beyond a particular value. 
+
+The `**em** `unit multiplies the previous sizes. For example if you had an inherited style of 20px and you specify 2em it will result in 40px. For nested elements with em units it will compound. For example if you have a parent element with 20px, it has a child with 2em, for it's child if we specify 1.5em it will be 40px\*1.5 = 60px. Due to this it can become tricky. Though we can use it if we want where we need to specify font sizes for particular parts of our website. Note that it is the pixel value that propagates and compounds, not the em value. The elements only see the value in pixels.  
+  
+To avoid the compounding behavior we can use the `**rem** `unit. This will take the multiplier which is specified along with the rem and multiply it with the size of the root element which is the html element. By default it is 16px. The root element inherits the browsers default font size. If you want to override this behavior we can set a default font-size to html element.
+
+Here the user has full control over the size. You can also use this unit with other type of values such as margin. Though the rem always refer to the font-size of the root element so the calculation will be performed based on that. So when the default font-size of the browser changes it will also change the values defined with rem.  
+In some cases you don't need to use rem for certain properties such as shadow, because the shadow need not be changed even if the font size changes.
+
+We can use viewport width and viewport height instead of percentage values. For example we can set the width to 100vw and the height to 100vh. This will cover the complete width and height of the viewport. But still you need to set the position fixed for this to take effect.   
+We also have `vmin `which is a css viewport unit that is relative to the smaller of the two viewport dimensions(width or height). A value defined in vmin will be calculated based on whichever viewport dimension is smaller. The size will not increase beyond the defined proportion until both viewport dimensions become equal. If viewport is resized such that the smaller dimension shrinks further, the element's size will scale down accordingly always remaining relative to the minimum view port dimension. 
+
+Similarly we have `vmax` which is a css viewport unit that is relative to the larger of the two viewport dimensions (width or height). A value defined in vmax will be calculated based on whichever viewport dimension is larger. The size will not decrease beyond the defined proportion until both viewport is resized such that the larger dimension grows further, the element's size will scale up accordingly, always remaining relative to the maximum viewport dimension.
+
+There are some recommended units for the common properties we use:
+
+* font-size (root element): % or nothing.
+* font-size : rem (em for children only)
+* margin, padding: rem
+* border: px
+* width and height: %, vw and vh based on the use case.
+* top, bottom: %
+* left, right: %
+
+We can use `margin: auto` to center elements, but it will only work with block level elements with an explicit assigned width. 
+
+A modal is a pop up which we can show in our page using CSS and javascript. The backdrop is one part of the overlay which disables all other clickable items in the webpage. We can create a modal by creating a div and placing the contents inside it like:
+
+```javaScript
+    <div class="modal">
+        <h1 class="modal__title">Do you want to continue?</h1>
+        <div class="modal__actions">
+            <a href="start-hosting/index.html" class="modal__action">Yes!</a>
+            <button class="modal__action modal__action--negative" type="button">No!</button>
+        </div>
+    </div>
+```
+
+Then we can style that by adding a fixed positioning and z-index. We should also make sure to give it display none initially, we will then change it using javascript to make the modal visible upon an even like button click. The styling code will look like:
+
+```javaScript
+.modal {
+  position: fixed;
+  display: none;
+  z-index: 200;
+  top: 20%;
+  left: 30%;
+  width: 40%;
+  background: white;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+```
+
+We can select elements using javascript using their tags, id, attribute or class. We can use the `querySelector `of the document object to pass in css selectors to target elements. To get multiple elements we can use `querySelectorAll `to get an array of elements. We can get the selected element to a variable and use the `style `attribute on that variable to see the defined inline styles of that element.  
+We can also apply a style directly from the javascript like:  
+`backdrop.style.display = "block";` 
+
+Alternatively we can add and remove classes using javascript to make elements appear and disappear. We can create a class to set the display property. In javascript we can access the `className `attribute of the selected element which holds the class attribute as string. If we directly assign the new class name here it will break the other style because it will overwrite all other classes.   
+The alternative to this is `classList `property of the element which will provide the classes of an element as a list. From this list we can add, remove classes easily. List also have methods like `contains()` to check if an item is already present in the list. We can directly add the class like this. In case of issues with specificity we can mark the rules as `important` in this particular case.
+
+The code will look like:
+
+```javaScript
+modalClose.addEventListener('click', () => {
+    modal.classList.remove('open');
+    backdrop.classList.remove('open');
+});
+ 
+backdrop.addEventListener("click", () => {
+    mobileNav.classList.remove('open');
+    modal.classList.remove('open');
+    backdrop.classList.remove('open');
+});
+ 
+toggleButton.addEventListener("click", () => {
+    backdrop.classList.add('open');
+    mobileNav.classList.add('open');
+});
+```
+
+When you observe the style attribute of the javascript we can see all the properties of CSS. But these property names are slightly different here. Here camel cases are used to denote properties instead of -. This is because in javascript property names are invalid if they contain dash. The dashes are omitted and the first letter of the word coming after dash is capitalized to get the javascript property name.   
+We can also use \[\] notations to access different style properties through javascript. We will pass the css property name as a string. Here we will use the normal css property name because inside of strings it is allowed to have dashes.
