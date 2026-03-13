@@ -866,3 +866,96 @@ toggleButton.addEventListener("click", () => {
 
 When you observe the style attribute of the javascript we can see all the properties of CSS. But these property names are slightly different here. Here camel cases are used to denote properties instead of -. This is because in javascript property names are invalid if they contain dash. The dashes are omitted and the first letter of the word coming after dash is capitalized to get the javascript property name.   
 We can also use \[\] notations to access different style properties through javascript. We will pass the css property name as a string. Here we will use the normal css property name because inside of strings it is allowed to have dashes.
+
+The browser is able to identify the size of the screen. These pixels are calculated by the assumption that 1 inch contains 96 pixels. Based on this calculation the it will assume the dimensions of the screen. This is true in case of desktops screens. But in case of mobile devices the pixel density is very high so the page contents will look really smaller on mobile screens. To fix this issue we can decrease the amount of pixels which limits the information displayed on the screen at a time. 
+
+The developer tools in the browser shows the width and height of various commonly known devices. These dimensions are applied to the browser by dividing physical pixel width and pixel height by the pixel ratio. By applying this we will get the screen width and height which is closer to the original device width and height.   
+To tell the browser to apply this pixel ratio we can use the meta tag. This tag will translate the hardware pixels to CSS pixels.   
+`<meta name="viewport" content="width=device-width, initial-scale=1.0">` 
+
+This tells the browser that the width of the viewport should be the device width. By applying this the browser will not consider the hardware pixels but the CSS pixels(software pixels).   
+This is the first step to create a responsive design. The name attribute of the meta tag tells the browser to target the viewport. The content attribute sets the width of the page to the width of the device. This does the pixel ratio conversion. The initial scale defines the zoom level of the page. The value provided is 1.0 which means no zoom is applied. If we increase this value the site will be zoomed in. The user can also zoom in manually. We can disable this behavior if we want by adding user-scalable=no inside of content. By default this value is yes. The maximum-scale property restricts the amount of zoom we can do on a page. Similarly we also have minimum-scale which restricts the maximum zooming out level that we can do in a page.
+
+We also have media queries. There are difference between the two. 
+
+* The viewport meta tag is specified in html where as the media queries are written in CSS.
+* The viewport meta tag is required to adjust the site to device view port. It does not apply any design changes.
+* The media queries allow us to change the design based on the size. We can define multiple rules and change the values of different properties based on the size. The design changes are defined by us.
+
+If we only want to create a desktop only website we can ignore the meta viewport tag from the html. 
+
+Nowadays we create a website by starting for the mobile devices first. After fixing the mobile version we can check the desktop version. 
+
+A media query can be thought of as an if statement in css. We define a media query by specifying 
+
+```javaScript
+@media (condition){
+    rules;
+}
+```
+
+For the condition we can use `min-width`, `max-width` etc to define conditions. For example if we set the `min-width` as 40rem. In screens above 40rem width the defined rules will be applied, if not old rules defined with the selectors will be applied.   
+eg:
+
+```javaScript
+#product-overview h1 {
+  color: white;
+  font-family: "Anton", sans-serif;
+  position: absolute;
+  bottom: 5%;
+  left: 3%;
+  font-size: 1.6rem;
+}
+@media (min-width: 40rem){
+  #product-overview h1{
+    font-size: 3rem;
+  }
+}
+```
+
+In this case for the screens above or equal to 40rem width the font-size is increased to 3rem. In other cases the font-size is set to 1.6rem which is defined outside of the media query.  
+The `min-width` is the most commonly used media query rule, which is used for mobile first design.
+
+This approach lets us define the default the style for mobile devices and make changes to desktop styles using rules defined with media queries. We can specify different limits for screens sizes which let's us apply different properties for different device widths. 
+
+You should consider a few things before using media queries.
+
+* Media queries work like if conditions, if the condition is satisfied the rule will be applied.
+* All the code outside of the media query is mobile code. The media queries should kick in for desktop screens. Even though this is not mandatory it is much more convenient because most of the users use mobile devices. You should choose the approach based on the target audience.
+* If you are following desktop first design then you can use the `max-width` condition for media query to make it mobile friendly. In this case the rules define in the media query will only kick in on mobile devices.
+* You can add multiple media queries below each other. The rules in one query will not override the rules in other queries. The queries are evaluated from top to bottom like other css rules. The queries will work properly if you follow the proper order. **Start with smaller widths followed by larger widths.**
+
+We also need to know about the right breaking points to separate the media query rules and target the correct device. Most modern smartphones have a width of more than 300px. If your website looks good between the 300px and 768px you can ensure that your site will look good for most mobile phones. Then you could set your breaking point at 768px and then maybe at 1000px for bigger screens.   
+It is fine to add media queries below the actual selectors. The most commonly used standard is to place them at the end of the css file. This helps the developers to easily find the media queries and change them. 
+
+We can use logical operators to create complex media queries. We can use the and operator to specify a `min-width` and `min-height` to target devices. eg:
+
+```javaScript
+@media (min-width: 40rem) and (min-height:60rem){
+  #product-overview {
+    height: 40vh;
+    background-position: 50% 25%;
+  }
+ 
+  #product-overview h1 {
+    font-size: 3rem;
+  }
+}
+```
+
+ We can also use properties such as `orientation `as condition for media queries. It can have values like `landscape `and `portrait`. eg:
+
+```javaScript
+@media (min-width: 40rem) and (orientation: portrait){
+  #product-overview {
+    height: 40vh;
+    background-position: 50% 25%;
+  }
+ 
+  #product-overview h1 {
+    font-size: 3rem;
+  }
+}
+```
+
+We can also have comma separated conditions for media queries to activate rules weather any one of them is met.
