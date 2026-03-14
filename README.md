@@ -1,4 +1,5 @@
 # CSS
+
 CSS stands for cascading style sheets. It is used to make your webpage look good. CSS is optional for a webpage. It allows you to add colors change position etc. 
 
 It was first introduced in 1996 called CSS version 1\. In 1998 CSS 2 was introduced. The current version of css is CSS 3\. There will be no CSS 4 because from CSS 3 additional features will be added into independent modules which will be used. CSS 3 is also in active development.   
@@ -959,3 +960,185 @@ We can use logical operators to create complex media queries. We can use the and
 ```
 
 We can also have comma separated conditions for media queries to activate rules weather any one of them is met.
+
+We can group the input element and it's label into a div to style them by adding a class to the div. Alternatively we can target the individual elements of a form and style them individually. The elements in the form such as labels, select and input fields are inline elements. We can set the display property to block to convert this into block level elements. Also we need to set the width to 100% so that the elements occupies the entire screen width. Like:
+
+```javaScript
+.signup-form label,
+.signup-form input,
+.signup-form select{
+    display: block;
+    margin-top: 1rem;
+    width: 100%;
+}
+```
+
+The above approach may cause problems because for the elements such as checkbox and radio buttons we may use the input element itself and change the type attribute to make it a checkbox or radio button. We can use advanced attribute selectors to set the styling of these elements. We have already seen attribute selectors which we can use if the element have a particular attribute. But this will not consider the value of the attribute.   
+We can use a selector which will target the element with a particular attribute and value. The syntax will look like:
+
+```javaScript
+[type="value"]{
+    rule;
+}
+```
+
+We can also select element with a particular attribute value in a list of attributes. The syntax will look like:
+
+```javaScript
+[type~="value"]{
+    rule;
+}
+```
+
+We can also select an element with a particular attribute value or a particular value prefix using:
+
+```javaScript
+[type|="value"]{
+    rule;
+}
+```
+
+For example if we have an element like:  
+`<p lang="en-us">Hi!</p>`  
+And if we need to target the elements with attributes that has values which starts with en we can use like:
+
+```javaScript
+[lang|="en"]{
+    color:red;
+}
+```
+
+This will only work because the character that follows the en is a -.   
+We also have advanced attribute selectors which will select based on a particular value prefix like:
+
+```javaScript
+[type^="value"]{
+    rule;
+}
+```
+
+We can also select elements with a particular suffix for an attribute value like:
+
+```javaScript
+[type$="value"]{
+    rule;
+}
+```
+
+We can also select elements with at least one attribute value like:
+
+```javaScript
+[type*="value"]{
+    rule;
+}
+```
+
+For this the the specified value need not to be in the beginning or end, the value should contain the specified characters any where inside of the attribute value.
+
+We can also check for values irrespective of the casing like:
+
+```javaScript
+[type*="value" i]{
+    rule;
+}
+```
+
+If we don't add i it will be case sensitive.
+
+We can use the selector like:
+
+```javaScript
+.signup-form input[type="checkbox"]{
+    
+}
+```
+
+Which will work fine, alternatively we can select any other attribute like the class or id and check for the particular value. Eg:
+
+```javaScript
+.signup-form input[id*="terms"]{
+    
+}
+```
+
+We can also use other combinators like adjacent sibling combinators to select the adjacent sibling of the selected element. for example:
+
+```javaScript
+.signup-form input[id*="terms"],
+.signup-form input[id*="terms"] + label{
+    display: inline-block;
+    width: auto;
+}
+```
+
+  
+The font in the elements such as input fields may not necessarily have the default font you set for the content, we can set the `font `property to `inherit `for setting the font properties of other elements to the input elements.
+
+Elements such as input fields also have outline, an outline can be thought of like a border but it is different from border. We can also have an outline and a border. By default the browser will provide a border when the element is focused. We can override the default behavior by setting the border to none. Example:
+
+```javaScript
+.signup-form input:focus,
+.signup-form select:focus {
+    outline: none;
+    background-color: #d8f3df;
+    border-color: #2ddf5c;
+}
+```
+
+Combining pseudo selectors is also perfectly valid for example:
+
+```javaScript
+.signup-form input:not([type="checkbox"]):focus,
+.signup-form select:focus {
+    outline: none;
+    background-color: #d8f3df;
+    border-color: #2ddf5c;
+}
+```
+
+The checkbox is a special type of input, even if we apply some styles to it, it may not reflect, for example if we set a different background color, it will not reflect. The default behavior of elements such as checkbox and select are determined by the browser default styles, that is why the select box have arrows inside them. If we want to change that we want to override it. Traditionally we used `-webkit-appearance:none` to remove this behavior. But now there is a dedicated `appearance `property in css which can be set to `none`. We also have `-moz-appearance` which decides appearance in firefox browsers. We can also use all of them for better compatibility.  
+If you apply the above properties to none the the checking behavior of the checkbox is lost. We have to add this behavior manually. We can use the` :checked` pseudo class for this. The style will look like:
+
+```javaScript
+.signup-form input[type="checkbox"] {
+    border: 1px solid #ccc;
+    background: white;
+    width: 1rem;
+    height: 1rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+ 
+}
+ 
+.signup-form input[type="checkbox"]:checked{
+    background: #2ddf5c;
+    border: #0e4f1f;
+ 
+}
+```
+
+In case of invalid inputs we will add the styling to the input fields by adding classes. This can be done on the server side or by using javascript. We can set the various style properties in this class.  
+HTML and CSS provides a more elegant way using the `:invalid` pseudo selector. For fields like email it will automatically check if the email address format is valid. Example:
+
+```javaScript
+.signup-form :invalid {
+    background: #faacac !important;
+    border-color: red !important;
+}
+```
+
+We can also set the fields to required by setting the required attribute to make sure that the fields must be filled. If they are not filled at the time of submission then it will automatically apply the invalid behavior. The problem with this is that the user will see validation feedback whenever he visits the form. We can use javascript to fix this problem by triggering the invalid behavior once the submit button is clicked.   
+
+There is also a` :valid` pseudo class which will select the elements when the form or input field is valid and apply the style.
+
+The browser will also apply some style to the buttons by default such as it will apply a default font. We can override this behavior by using the `font: inherit` property.   
+A button can also be disabled which is done with the help of javascript. We can also apply styles to the button's disabled state. The styling will look like:
+
+```javaScript
+.button[disabled]{
+    cursor: not-allowed;
+    border: #a1a1a1;
+    color: #a1a1a1;
+}
+```
