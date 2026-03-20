@@ -1142,3 +1142,149 @@ A button can also be disabled which is done with the help of javascript. We can 
     color: #a1a1a1;
 }
 ```
+
+We have generic families and we have font families in CSS. The main generic families are `serif `,`sans-serif`, `cursive ` , `monospace`, `fantasy`. These generic families are kind of a headline for defining a specific attribute of the fonts inside this family. For example the cursive family includes fonts which are cursive. Even though two fonts belong a same family they will look different.  
+Some common fonts and their families are:
+
+* serif : Time new roman, Georgia
+* sans-serif: Helvetica, Verdana
+* cursive: Brush script, mistral
+* monospace: courier new, lucida bright
+* fantasy: It is not a commonly used family.
+
+We can find the generic fonts and their families in the browser. For this we can go to browser settings and under the fonts we can see the default fonts for the browser. The standard font option is the default font for the browser. We can select a different font family to change the font. We also have options for serif font. Since this is a generic family we can choose the default font for this generic family. We also have the same option for sans-serif and fixed width font (monospace) generic font families.   
+If we don't specify a font family in CSS the browser will automatically choose the default font specified in the browser settings. Alternatively we can define a generic family in our CSS code which will apply the font family selected by the browser default font of the generic family.  
+We can also choose a font family in our CSS code that is not available in the browser of the user. Here also we have 3 options:
+
+1. Store the font family font in the users computer locally. Here we cannot control which font families are installed or which ones are not installed. This might cause problems.
+2. Web fonts are an alternative for the above problem. The google fonts are an example of this. Here we fetch the font from a third party.
+3. Retrieve the font which we want to apply from a server which hosts your website.
+
+By following any of the above option we can ensure that our website looks the way we want for all users.
+
+Changing the font family might cause issues in the website layout. Because the spacing for different font families are different. 
+
+Quotes are not necessary for defining the font family in css. We can also specify more than one specific font family in css. If the browser is not able to find the first font family it will use the second font family. The browser will keep jumping to the next font specified until the required font is found. If it is still not able to find the font family then it will fall back to the generic font family if it is specified. In this case the browser default font family will be applied for the generic font family. This is why we specify a fallback generic font when defining the font family.
+
+eg:  
+`font-family: "Montserrat", sans-serif;` 
+
+Not all font families are installed in all browsers and all operating systems. Some fonts are specific to some operating systems. 
+
+We can fix the above problem by using a web font like google font. Google fonts page offers a large amount of free fonts which we can preview and choose the font faces and font weights. Each font family in google fonts have different font faces and weights. After choosing the font family and font face we can import the google font in multiple ways. The easiest option is embedding the link tag to the head of the html page. We will need to do this in all the html pages.   
+  
+An alternative to the above is using the @import statement in the CSS file as specified in the google fonts page.   
+The code will look something like:  
+`@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap'); `
+
+We should add this import at the top of the CSS file outside of selectors. This way if we import the CSS file in the html page the font will also be available in the html page.  
+This method is easier and the recommended approach.
+
+When using this method we also don't need to add the cross origin scripts.
+
+For font-weights we have numbers from 100 to 900, the bigger the number the higher the font weight. We also have bolder which sets a value higher than the inherited one. We also have inherit which will inherit the font weight from the parent.   
+The normal font weight is 400\. We can also specify normal to set 400 as font weight. The number 700 sets the font to bold. We can also specify bold to set font weight to 700\.   
+If we are using google fonts we should import the higher font weight face also to use that font weight in our page.   
+For example we need to add the `family=Anton:400,900` in the import url.   
+For some fonts we will automatically import all the font weights and their faces like:  
+`Roboto:ital,wght@0,100..900;1,100..900`   
+Similarly we also have italic font-style which also requires specific font faces. If we specify i after the font weight value in the import url it becomes italics font weight. We should also specify font-style as italic in the style.
+
+We can also download fonts from google fonts. We will get it as a zip file. If we extract these we can see the ttf files for those fonts. We need to place the font folder inside of our project.  
+.To import the fonts we need to go to the CSS file and use the `@font-face ` . We need to specify the font-family, specify the `src `property and use the `url()` method to specify the path of the ttf font file.   
+eg:
+
+```javaScript
+@font-face {
+    font-family: "AnonymousPro";
+    src: url("Anonymous_Pro/AnonymousPro-Regular.ttf");
+}
+```
+
+This will import the font to the css file. To apply this use CSS selectors and set the font-family property.  
+The problem with the above approach is that we need to import the font with the font face(bold or italic) which we want to use. For example if we use the regular font even if we apply the font weight bold property there will not be any change in the font weight. We need to download the font face with the particular font weight and import it. 
+
+When we are using the same font family with different weights we can import those fonts in our css and specify the weight which we need. When applying the `font-family` we should also use the `font-weight` which we set for the element we want to apply. Eg:
+
+```javaScript
+@font-face {
+    font-family: "AnonymousPro";
+    src: url("Anonymous_Pro/AnonymousPro-Regular.ttf");
+}
+@font-face {
+    font-family: "AnonymousPro";
+    src: url("Anonymous_Pro/AnonymousPro-Bold.ttf");
+    font-weight: 700;
+}
+```
+
+If we want to apply the bold font we can use it like:
+
+```javaScript
+font-family: "AnonymousPro";    
+font-weight: 700;
+```
+
+If we don't specify the font weight we will get the regular font.
+
+We can also specify the format of the font we use by using the `format()` with the `src `property. For example:  
+`src: url("Anonymous_Pro/AnonymousPro-Regular.ttf") format("truetype");`   
+This is to provide additional information to the browser about the font format that we are using.  
+The formats in the above example is the true type format or ttf. There are also other font formats. We should check the font format support of the browsers. Some browsers don't support some font formats.   
+Apart from ttf we have `woff ` (web open font format). This is a compressed true type font. This is a compressed type, so it makes our website load faster. Some font family fonts can become quite large which will take more time for our browsers to load. The browser support for this format is also quite good. WOFF 2.0 is the latest version of web open font format, it offers a significantly higher compression and faster loading. 
+
+If you have the font files in different formats we can specify multiple formats in the same src property definition. Like:
+
+```javaScript
+    src: url("Anonymous_Pro/AnonymousPro-Regular.woff2") format("woff2"),
+        url("Anonymous_Pro/AnonymousPro-Regular.woff") format("woff"),
+        url("Anonymous_Pro/AnonymousPro-Regular.ttf") format("truetype");
+```
+
+  
+There are also other properties for fonts which we can set. Some common ones are:
+
+* font-variant : Used to control the variations of the font styles. It has different values. The `small-caps` change the small letters to capital letters.
+* font-stretch: We can use this to specify various stretch levels for the fonts. We should note that each stretching level should be part of a font face.
+
+* letter-spacing: We use this to define the letter spacing. We can use pixels or rem to specify the value. If we increase it it will increase the space between the letters in your text.
+* white-space: It specifies how white spaces are handled in text in the browser. By default it is `normal`. This makes sure that every new line will start where there is white space. It will ensure that the text is broken into multiple lines based on the available space. If we change this into `nowrap `it will display the text in a single line, the width of our window has no impact on that. We also have `pre `which will display the the text as we have written inside in our html tags, this will preserve white spaces and line breaks. The `pre-wrap` will wrap the text (break the lines if there is not enough space) but as soon as sufficient space is available it will preserve the text structure in our html element which we defined. The `pre-line` property will fill try to fill the lines whenever possible.
+
+It will also try to preserve the line breaks.
+
+* line-height: Defines the top and bottom of our content box. It will multiply the font-size of the text by the defined integer line height value. By default the line height depends on the font family we are using. If we provide an integer value it will refer to the font size. We can also use pixels, percentages(percentage multiplier of the font size). It is not recommended to use percentages because it might result in unexpected results due to inheritance. It is recommended to use numbers to get the expected behavior based on the font size.
+
+* text-decoration: Used to decorate text. We have values like `underline `which adds a line under the text whereas the `overline `adds a line above the text. The `line-through` property to strike through the text. We can also use `line-through dotted` to add dotted strike through lines. We can also use the dotted for all values of text decoration. We can also specify the color of the text decoration as the third value. We are can also use different line styles apart from dotted. The `wavy `is another type of line which makes it look like waves. We can also use the `text-decoration:none` to remove the default decoration for an element like anchor tags.
+* text-shadow: Let's us add a shadow to our text. We need to specify the offset from the x axis, y axis, blur and color if we want. eg:  
+`text-shadow: 2px 2px 7px rgb(185, 180, 180);  
+`
+
+There is also a font shorthand we can use. We can use this by using the `font `property. For the shorthand some values are optional but some are mandatory. Additionally the order of the values are important. The first mandatory value is `font-size`, and then the `font-family`. Here we add value after value.   
+There are optional values such as `font-weight`. If we are to use font weight we should specify it before the `font size`. If we have `font-variant` it should precede the `font-weight`. The `font-style` should precede the `font-variant`.   
+The `font-variant`, `font-style` and `font-weight` values should precede the `font-size`.   
+**If we want to add a** `**line-height**` **we need to add a / after** `**font-size**` **and specify it.**   
+The main purpose of this font shorthand is we can specify all out font related styles in a single line.   
+We cannot specify the font-size only with the font shorthand property. 
+
+Alternatively we can use it to refer to system fonts. The system font simply refers to default font families which are applied to different parts of your operating system. For example we can use `font: menu` to use the font used in the menu of the operating system. Another value for this can be `status-bar` 
+
+The `font-display` property only works for our custom fonts we imported using the `@font-face`. We need to specify this inside the `@font-face`. The values we specify for the `font-display` will affect the loading behavior of our fonts. The values we can have are:
+
+* swap:
+* block:
+* fallback:
+* optional:
+* auto: Used when we don't specify any value. It means that the browser will automatically choose a value of it's choice.
+
+We have 2 situations going while the loading phase of the font takes place. The block-period and the swap-period. For the `swap `value we don't have any block period. For example a visitor is visiting our website. The font's might make some time to load. We can specify a block period to reserve the space for our font with an invisible font face. The font's will not be visible, but the space will be reserved. 
+
+For values that does not have a block period the fallback font will be immediately visible. The swap period is the time for the browser to switch back to the font from the fallback font.
+
+For `swap `value this period is infinite. The browser can take any time as it wants to load the custom font and change it, till then the fallback font will be visible. 
+
+For `block `value we have a short block period. At this time the placeholder for the text will be placed in the screen, though no text will be visible on the screen. After this the behavior is same as that of swap, i.e, it will load the fallback font, till the browser load the font it will wait, once the font is loaded it will swap the fallback font with the loaded font.   
+
+For `fallback `value we have a very small block period. It will have the invisible font-family displayed, but for a very minimum of time. Then it will switch to the fallback font. After this it will have a short swap period, where the browser has the chance to load the custom font. If the browser is able to do that then it will be changed to the custom font otherwise the fallback font will be displayed.
+
+The `optional `value has a very short block period. It does not have a swap period. It allows the browser what to choose. This depends upon the internet connection speed. If the internet speed is good it will load the custom font. If the connection is not good it will load the fallback font. This decision cannot be reversed.   
+The `auto `value let's the browser to make decisions, if you don't set a `font-display` property the auto value will be used. Most browsers choose `block `for this. 

@@ -1,3 +1,15 @@
+@font-face {
+    font-family: "AnonymousPro";
+    src:
+        url("Anonymous_Pro/AnonymousPro-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "AnonymousPro";
+    src: url("Anonymous_Pro/AnonymousPro-Bold.ttf") format("truetype");
+    font-weight: 700;
+}
+
 main {
     padding-top: 2rem;
 }
@@ -16,7 +28,7 @@ main {
     margin: 1rem 0;
     border: 4px solid #0e4f1f;
     border-left: none;
-    position:relative;
+    position: relative;
 }
 
 .package:hover,
@@ -32,16 +44,17 @@ main {
     padding: 2rem;
 }
 
-.package__badge{
-    position:absolute;
-    top:0; 
+.package__badge {
+    position: absolute;
+    top: 0;
     right: 0;
     margin: 1.2rem;
     font-size: 0.8rem;
-    color:white;
-    background:#ff5454;
-    padding:0.5rem;
+    color: white;
+    background: #ff5454;
+    padding: 0.5rem;
 }
+
 .package__subtitle {
     color: #979797;
 
@@ -53,6 +66,8 @@ main {
     font-size: 1.2rem;
     color: #0e4f1f;
     background: white;
+    /* font-family: "Roboto", sans-serif; */
+    /* font-style: italic; */
 }
 
 .clearfix {
@@ -88,22 +103,26 @@ main {
     color: #bbb;
 
 }
+
 @media (min-width: 40rem) {
-    main{
-      max-width: 1500px;
-      margin-left: auto;
-      margin-right: auto;
+    main {
+        max-width: 1500px;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
 @media (min-width:1500px) {
-    .package{
+    .package {
         border-left: 4px solid #0e4f1f;
     }
-    #free{
+
+    #free {
         border-right: 4px solid #0e4f1f;
     }
-    #free:hover,#free:active{
+
+    #free:hover,
+    #free:active {
         border-right-color: #ff5454;
     }
 }
