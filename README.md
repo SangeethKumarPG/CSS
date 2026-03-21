@@ -1288,3 +1288,51 @@ For `fallback `value we have a very small block period. It will have the invisib
 
 The `optional `value has a very short block period. It does not have a swap period. It allows the browser what to choose. This depends upon the internet connection speed. If the internet speed is good it will load the custom font. If the connection is not good it will load the fallback font. This decision cannot be reversed.   
 The `auto `value let's the browser to make decisions, if you don't set a `font-display` property the auto value will be used. Most browsers choose `block `for this. 
+
+Flexbox is the modern way to change the way our elements are displayed. Flexbox can make your CSS code more lean and readable. We can easily place items where we want without the complications of manual calculation and adjustments we used for inline-block elements.
+
+To use flex box in our page we only need to set the `display `property to `flex`. This will create a **flex container**. Inside the nested container we should have other nested elements. These children are called **flex items**. Once we convert the elements into a flexbox we can apply different properties our parents and children. For parent we can apply the `flex-flow`, `justify-content`, `align-content`, `align-items`.   
+For children we can apply properties like `order`, `flex`, `align-self`. 
+
+When we apply flex value to the display property, the child elements will be placed side by side. Also we can see that the child elements will use the entire height available from the parent element. If we decrease the width of the window we will also see that the width of the elements including parent and children decreases until the width occupied the element is same as the length required for it's content. If we increase the width of the window it will behave like a normal block level element. When we specify display flex to a div which has children, the parent will become the flex container and the children will become flex items automatically.   
+  
+We also have `inline-flex` value for display property. When we apply this instead of flex when we resize the window the width of the elements are not changed. The size we defined for the width will be respected here. The width of the parent element will not change, it uses space required for it's content. 
+
+When we apply display flex 2 properties will get set automatically to the flex container. They are `flex-direction` which has the default value of `row `and `flex-wrap` which has the default value of `nowrap`.   
+If we change the `flex-wrap` to `wrap `when we decrease the width of the window and if it is less than the width of the defined content the child elements will be moved to second row to adjust the resizing. Also the height of the element also changes, the element which jumped to the second row will use the height required for it's content to get displayed. If we continue to decrease the width the elements will be placed in a single column.   
+We also have `wrap-reverse` which we can set for `flex-wrap` which will simply change the order of child elements will be reversed. The first element will be placed last and the last element will be placed first. If we increase the width it will turn back to the initial behavior by placing the first item in the left most side and the last item in right side.
+
+If we change the `flex-direction` from `row `to `column`, it will stack up the children in a column. It will behave like block level elements. If the child elements has no width specified it will take up the entire available width from the parent, if the element has a predefined width it will be used as is until we decrease the size of the window. If we decrease the width; the child elements with fixed width are not shrunk even if the screen width gets lower than the width of the element. The element without a width will reduce the width even below the point that is required by the content.   
+We can use `column-reverse` for `flex-direction` to reverse the order of child items. We also have `row-reverse` which will change the order of child items in the horizontal direction. 
+
+When we apply the flex direction to row which is the default, the starting point of the main axis is the left top corner. The cross axis will also have the same starting point and direction will be from top left to bottom left. The child items are added from left to right along the main axis here.   
+When we apply flex direction to row-reverse the main axis will be from top right to top left. The cross axis also starts from the right top corner and goes to the right bottom corner. When we apply the flex direction property the starting and finishing point of the main axis and cross axis changes.   
+  
+We also have the flex direction column, here also the starting point of both axis are on the top left, but the main axis goes from top left to bottom left and the cross axis goes from top left to top right. 
+
+The flex-direction property defines the position of the main axis is across the row or across the column.   
+The flex direction column reverse places the main axis and cross axis at the left bottom end. The main axis will go from bottom left to top left and the cross axis will go from bottom left to bottom right. 
+
+The `align-items` property is used to align the flex items along the cross axis. The default value is stretch. If we apply the value of `center `to this it will center the flex items along the cross axis (we have seen that the cross axis position will change based on the flex-direction property value).   
+The value of `flex-start` will position the flex items at the starting the of the cross axis. If we apply `flex-end` it will position the elements at the end of the cross axis. 
+
+Similarly we can also adjust the position of flex items along the main axis. For this we need to set the `justify-content` . This also have same values as that of `align-items` property. If we use `center `it will center the flex items along the main axis. If we set both align items and justify content as center then it will be centered on both cross axis and main axis. If we use `flex-end` it will place the flex items at the end of the main axis. 
+
+The `align-content` property is used to align the content along the cross axis. We can use the values we used for `justify-content` for this property also. 
+
+If we want to change the order of flex items we can use the `order `property. The default value is 0\. If we change the order of an item to 1 it will be placed after all elements with order value 0(if it have a flex direction of row and the items are placed at the flex start of the main axis). If we change the value to -1 it will be placed at the start of the flex in the same scenario. The bigger the number the later it will be positioned. The above rule will be applied regardless of flex direction.
+
+The `align-self` property is used to position the flex item in relation with the cross axis. It can have values which we used for flex container and flex items like `center`, `flex-start`, `flex-end` etc.
+
+We also have `flex-grow` which can be used for flex items. It's initial value is 0\. If we add a value other than 0 to a flex item and if we increase the window size it will grow based on the available screen width, even if we had applied a fixed width, it will not grow till we exceed the defined width. The flex grow property makes the flex item to consume the remaining available space.   
+For example if we have 2 elements and if we apply flex-grow 1 to one element and flex-grow 4 to the other, if we increase the window size the total available free space will be divided into 5 parts and 4 parts will be allocated to the 2nd element and 1 part will be allocated to the first element. 
+
+If the flex container has a `flex-wrap` of `wrap `applied, and if we add a flex-grow value to the flex item then if we increase the screen width the item will be placed to the next line and it will take the entire available width in that line. 
+
+We can also apply `flex-shrink` to flex items. By default if we decrease the width of the window the items will decrease the width until it has the bare minimum width for the content. The default value of `flex-shrink` is 1\. If we use a value of 0 to a flex item and the flex item has a defined width, it will not shrink the item beyond the specified width.   
+If we apply a value other than 0 and 1, let's say 4 it will allow the flex item to shrink 4 times faster than items with the default flex-shrink.
+
+The `flex-basis` property defines the size of a flex item depending on the main axis. It is dependent on `flex-direction`. It's default value is auto. If we define a flex basis and our flex direction is set to row, the defined value of the flex-basis will override the width property. If we use the default value for flex-basis it will use the specified width value. If there is no width specified explicitly it will adjust the width based on the width required for the content.  
+For elements with `flex-direction` column the `flex-basis` property value which we set will override the height of the flex item.
+
+We can use percentage values, pixels etc like we used to specify width and height of elements for `flex-basis`.

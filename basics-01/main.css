@@ -99,20 +99,28 @@
 
 @media (min-width: 40rem) {
   .plan__list {
+    display: flex;
     width: 100%;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
   }
 
   .plan {
-    display: inline-block;
     width: 30%;
-    vertical-align: middle;
     min-width: 13rem;
     max-width: 25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 28rem;
+    /* margin: 2rem; */
   }
 
   .plan--highlighted {
+    z-index: 50;
     box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+    height: 30rem;
   }
 }
 
@@ -157,11 +165,16 @@
 
 @media (min-width: 40rem) {
   .key-feature{
-    display: inline-block;
-    width: 30%;
+    /* display: flex; */
+    /* width: 30%; */
     vertical-align: top;
     max-width: 25rem;
 
+  }
+  .key-feature__list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 

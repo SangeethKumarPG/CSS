@@ -12,7 +12,7 @@ body {
 }
 
 main {
-    min-height: calc(100vh - 3.5rem - 8rem);
+    /* min-height: calc(100vh - 3.5rem - 8rem); */
     margin-top: 3.5rem;
 }
 
@@ -34,12 +34,10 @@ main {
     left: 0;
     background: #2ddf5c;
     padding: 0.5rem 1rem;
-    z-index: 1;
-}
-
-.main-header>div {
-    display: inline-block;
-    vertical-align: middle;
+    z-index: 60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .main-header__brand {
@@ -47,19 +45,16 @@ main {
     text-decoration: none;
     font-weight: bold;
     /* font-size: 1.5rem; */
-    height: 2.5rem;
+    
     /* height: 1.5rem; */
     /* width: 20px; */
-    display: inline-block;
-    vertical-align: top;
-
 }
 
 .main-header__brand img {
     /* height: 2.5rem; */
-    height: 100%;
-    width: 100%;
-    margin-top: 0.2rem;
+    height: 2.5rem;
+    vertical-align: middle;
+    /* margin-top: 0.2rem; */
 }
 
 .toggle-button {
@@ -93,10 +88,10 @@ main {
     margin: 0;
     padding: 0;
     list-style: none;
+    display: flex;
 }
 
 .main-nav__item {
-    display: inline-block;
     margin: 0 1rem;
 }
 
@@ -145,10 +140,8 @@ main {
     }
 
     .main-nav {
-        display: inline-block;
-        text-align: right;
-        width: calc(100% - 44px);
-        vertical-align: middle;
+       
+        display: flex;
     }
 }
 
@@ -163,12 +156,15 @@ main {
     margin: 0;
     padding: 0;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .main-footer__link {
-    display: block;
     width: 100%;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
 }
 
 .main-footer__link a {
@@ -188,6 +184,11 @@ main {
         max-width: 25rem;
         margin: 0 1rem;
     }
+    .main-footer__links{
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 .mobile-nav {
@@ -205,9 +206,13 @@ main {
     width: 90%;
     height: 100%;
     list-style: none;
-    margin: 10% auto;
+    margin:0 auto;
     padding: 0;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .mobile-nav__item {
