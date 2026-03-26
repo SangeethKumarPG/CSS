@@ -1,0 +1,44 @@
+.container {
+    display: grid;
+    border: 1px solid black;
+    color: white;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows: repeat(10, 10%);
+    height: 40rem;
+    grid-template-areas:
+        "header header header header"
+        "sidebar main main main"
+        "sidebar main main main"
+        "sidebar main main main"
+        "sidebar main main main"
+        "sidebar main main main"
+        "sidebar main main main"
+        "sidebar main main main"
+        "sidebar main main main"
+        "footer footer footer footer";
+}
+
+.header,
+.sidebar,
+.main-content,
+.footer {
+    background-color: red;
+    border: 3px solid white;
+    padding: 0.25 rem;
+}
+
+.header {
+    grid-area: header;
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.main-content {
+    grid-area: main;
+}
+
+.footer {
+    grid-area: footer;
+}

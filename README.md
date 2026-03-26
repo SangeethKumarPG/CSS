@@ -1336,3 +1336,252 @@ The `flex-basis` property defines the size of a flex item depending on the main 
 For elements with `flex-direction` column the `flex-basis` property value which we set will override the height of the flex item.
 
 We can use percentage values, pixels etc like we used to specify width and height of elements for `flex-basis`.
+
+CSS Grid allows us to create highly customizable complex page layouts. We can divide the webpage into rows and columns. Grids make positioning of elements easier. Most of the CSS frameworks can use grid. Also the design tools supports grids to define the layout of the page. Placing the items wherever we want is one of the most complex feature of CSS. CSS Grid makes this process easier by letting us specify a grid of rows and columns and letting us define which element should be positioned where. 
+
+**We can turn a container into a grid by setting the display property to grid.** This makes the container a CSS grid and the items inside of the container will be positioned in the grid. This will set some default settings to the elements but there won't be much visual changes that you can notice. It will create a single column and the elements inside of the container will become independent rows. If the child elements have nested elements then the wrapping element will be considered as a row(Only direct children are part of a grid). 
+
+To override the default grid layout we can use the `grid-template-columns` property. This allows us to have multiple columns instead of only having a single column. For the values we will set the width of the columns. We can mix and match absolute values using pixels or rems and relative values such as percentages here.   
+eg:
+
+```javaScript
+.container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 200px 150px 20%;
+}
+```
+
+We can use the developer tools of the browser to inspect the grid layout. For this go to the elements tab, choose the grid container and open the layout tab. We can see various options to help us work with grid. We can use the extend grid lines option to show the grid lines, which will help us to clearly identify rows and columns.   
+  
+Another special unit we can use in a grid-template-columns property values is fractions denoted by `fr`.
+
+If we define a fraction to a column it will split up the remaining space used by other columns. If we have more than one fractional unit defined for the columns then it will split the remaining space between all columns with fractions.   
+For example:
+
+```javaScript
+.container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 200px 2fr 20% 1fr;
+}
+```
+
+In the above code the 2nd column will take twice 2 parts of the available space and the last column will take one part of the available space(left over space by absolute and relative % values).
+
+We can also explicitly define the size of the rows using the `grid-template-rows `property. We can define the size of each row by specifying values separated by spaces. For example:
+
+```javaScript
+.container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 200px 2fr 20% 1fr;
+    grid-template-rows: 5rem 2.5rem;
+}
+```
+
+Here the first row will have a height of 5 rem and the next row will have a height of 2.5rem.   
+We can use rem, px, % or fr for specifying the row height.
+
+By default every child of a grid takes one cell in the grid. We can override this behavior. For example we can make a child element take more than one cell column in the grid. We can use the `grid-column-start` property to specify the stating of the grid item (child element). In the developer tools we can see the grid lines for rows and columns. CSS grid is composed of lines, gird is constructed by adding lines before and after rows and columns. Each line has a number, we can enable this developer tools. We can use these numbers to specify the column start as well as column end.  
+We also have the `grid-column-end` property. By default it is set to span one column only. We can add a value of this to determine the ending of the cell by specifying a line number which let's us span over more than one column. For example:
+
+```javaScript
+.el3 {
+    background: rgba(0, 128, 0, 0.5);
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+```
+
+  
+Here for the grid item style we will specify the `grid-column-start` and `grid-column-end` properties. By changing these values we can control the spanning behavior of the item. If we span elements like this the elements that come after the current element might be pushed to the the next row.   
+This same behavior can be applied to rows also by using `grid-row-start` and `grid-row-end `properties. 
+
+```javaScript
+.el3 {
+    background: rgba(0, 128, 0, 0.5);
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 3;
+}
+```
+
+For the same element we can make it span across rows like we defined above.
+
+The above defined is one way to override the default behavior of the grid.
+
+Apart from fractions, pixels, rem and percentages we can use `auto `for `grid-template-rows` and `grid-template-columns`. For rows it will take only the necessary height for fitting the content. In case of columns it will take all the remaining available width. If we have a height defined for the grid container then setting auto for the row template will take all the remaining height of the container for that particular row.   
+The best use case for `auto `is to fill up empty spaces in the grid.
+
+In some cases you want to have equal width or height for your grid template (row or column). Suppose if there are 4 columns and we want them to have 25% width we can repeat it 4 times. But there is an easier way for this using the `repeat `method. The first argument of the function is how many times it needs to repeat and the second argument the value that needs to be repeated.  
+eg:  
+` grid-template-columns: repeat(4, 25%);`   
+We can use any value which we want to repeat such as pixels, rems, fr etc.
+
+There is also a `minmax()` function in css which we can use to set the minimum and maximum width or height for the grid template. It takes in 2 arguments, the minimum value and maximum value. It can have values with any unit in CSS.  
+For example we can use it to set a minimum and maximum height for the row. If there is adequate space available then it will choose a value that is closer or equal to the maximum value that we have specified. If there isn't enough space available then it will shrink the size of the row or column. The value is computed between the minimum and maximum value specified. But it will not shrink below the specified minimum value. 
+
+Previously we have used the line numbers to span rows and columns. There is an alternative for this. For the starting position we can specify the line number. But for the ending we can use the `span `keyword and specify the number of columns or rows we want to span. For example:
+
+```javaScript
+    grid-column-start: 3;
+    grid-column-end: span 2;
+```
+
+If there are no further columns we can span it will take all the available columns it can span. We can also increase the position of the start to start from a different line in this case the other items will be repositioned.   
+We can also define -ve numbers for the start and end. If we use -1, it will count from the end of the grid. Suppose if we want an item to occupy the entire width we can set the column start to 1 and column end to -1\. In this case if there are other items on the same row, then it will position the element which we want to span into a new line. 
+
+Grid items _can_ overlap if their grid areas intersect. This happens when you explicitly place items using `grid-row` and `grid-column` properties. Grid items _can_ overlap if their grid areas intersect. This happens when you explicitly place items using `grid-row` and `grid-column` properties, however this is the natural stacking context and not specific to Grid. Grid items can use `z-index` to control stacking order _without_ requiring the `position` property. Grid creates a new stacking context for its items, so `z-index` works directly on Grid children.
+
+We can also add names to the grid lines for both row and column. For this we need to specify the any name we desire in between \[\] in the grip-template definition of the row or column. The name should precede the value. We can also use multiple names for a row or column by specifying the names separated by white spaces. 
+
+eg:  
+` grid-template-rows:[row-1-start] 5rem [row-1-end row-2-start] 2.5rem;`
+
+The names should not be any CSS keyword. We can see these names by enabling the show line names option in the grid settings of developer tools. We can use these names as value for properties for position the items. 
+
+```javaScript
+    grid-row-start: row-2-start;
+    grid-row-end:span 1;
+```
+
+We can also use the row and column short hands to specify grid-column start and end and grid-row start and end.   
+For setting the column start and end we can use the `grid-column` shorthand. We first specify the column start value and then the end value separated by a /.
+
+eg:  
+`grid-column: 1 / -1;`   
+Will start the column from the first line and ends it at the last line of the grid.  
+The row shorthand will also work similarly. Here we use `grid-row` shorthand and specify the values the same way as before. Eg:  
+` grid-row: row-2-start / span 1;`   
+  
+There is also an alternative to the above 2 short hands. We have the `grid-area `property which lets us specify both the grid row and column in a single value. It has a predefined order which we need to set. The first value is `grid-row-start`. Then after a / we specify the `grid-column-start` value. After this add a / and place the `grid-row-end` value. Finally place the `grid-column-end` after a /. In the above case the example can be written as:
+
+`grid-area: row-2-start / 1 / span 1 / -1;`   
+
+By default there will not be any space between the grid items. Even if we add a margin to an element there will be some space between the grid line and the element in the cell. This is not a clean way. We can use the `grid-column-gap` property to set a gap of specified value between all the columns. We set this property inside the grid container. When we span columns these gaps are also filled by the elements.  
+The `grid-row-gap` property can be used to set the gaps between the rows of a grid.   
+There is also a shorthand which lets us set the gaps for row and column in one go. We use the `grid-gap` property for this. Here we will specify the `grid-row-gap` first followed by `grid-column-gap` . 
+
+We used the grid numbers and grid names to position items in a grid. There is also an alternative to this. We can define areas in the grid and assign items these to these areas. We can specify these areas in the grid container using the `grid-template-areas` property. We then specify the name of areas inside of quotes. For each cell in the grid we should specify the area name.   
+If you have 4 columns and 2 rows you should specify the area names for 8 cells. It will look like:
+
+```javaScript
+.container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-template-rows:[row-1-start] 5rem [row-1-end row-2-start] 2.5rem;
+    grid-template-areas: "header header header header"
+                          "side side main main";
+}
+```
+
+We can then use the `grid-area` property to specify the area for the grid item. When specifying this we don't need to specify the quotes. It will look like:  
+` grid-area: header;`   
+This simplifies the process because we don't need to specify where the item should start and end, instead we only need to specify the area for the element so that the element will automatically be placed to that area.   
+In case you don't want to specify an area name in the template we can use . For example:
+
+```javaScript
+    grid-template-areas: "header header header header"
+        ". . main main";
+```
+
+  
+We can also define grid line names when we are using the repeat function. For this we need to specify the starting line name in square brackets before the width or height followed by the ending line name in square brackets. It will look like:  
+`grid-template-columns: repeat(4, [col-start] 25% [col-end]);`
+
+Since the name is repeated for each line, it will automatically get the numbering based on the position. We can specify the line name followed by line position after a space. We can access this position like:  
+`grid-column: col-start 2/ col-end 2;  
+` Till now we have used `-start` and `-end` for line names. The `-start` and `-end` naming pattern improves readability and enables the use of **implicit grid areas** (not automatically generated template areas), allowing you to reference them by name rather than line numbers.
+
+We can also enclose the repeat function in area name by specifying a name that ends in -start and -end. We can use this for templates we are not using the repeat function. For example we can use like:
+
+```javaScript
+grid-template-columns: [hd-start] repeat(4, [col-start] 25% [col-end]);
+grid-template-rows: [hd-start] 5rem [hd-end row-2-start] 5rem;
+```
+
+This will gives us a named line before all the columns and after all the columns as well as lines surrounding the rows. This creates a clearly marked area in the grid. We can use this as an automatically generated area name. We can use the name we specified before -start and -end which is the same as the area name.  
+We can use this like:  
+`grid-area: hd;`   
+The key point here is that we should specify the start and end line names should be on both axes. Also note that when we are using the normal way instead of repeat if we want to mark an area, we specify the end line of a row or column along with the start name of the next line of the row or column. 
+
+The above automatic naming will not work if made a typo in the start or the end like `hd-sart` will not work.
+
+Elements that are **completely removed from the normal document flow** (`position: absolute`, `position: fixed`) will not participate in grid layout.
+
+Elements that **remain in the normal document flow** (`position: relative`, `position: sticky`) **will still participate** in the grid, even though they have non-static positioning.   
+
+We can use the grid to position our header and footer in our page. For this we can create 3 rows, the first row will be used for header section like the navbar. We can use a fixed height for this. The second row will be used for the main contents of the page, we can use auto for this to take as much height as the content needs. For the 3rd row we will define the height for the footer. We can then position them using grid area or grid line.
+
+In some cases the size we assigned for a row may not fit our content. If we have specified auto as the value of a row we cannot use the auto for two rows which may cause problems. In this case we can use the `fit-content()` function. For this function we need to pass a maximum value. The page will use the sufficient value if it requires less space than that. If it requires more space than that it will provide just enough space for the content to fit beyond the maximum we defined.  
+Eg:  
+` grid-template-rows: 3.5rem auto fit-content(8rem);` 
+
+By default the grid content will occupy the entire cell width and height. We can also add some additional properties to the grid container to position the grid items. Some common properties we can use are:
+
+* `justify-items` : Used to adjust the position of elements inside of the cell(grid tracks). We can use values like `center `which places the items at the center of the cell, start can be used to place the items at the start of the cell, `end `will place the values at the end of the cell. The start and end does not necessarily mean left and right. It will depend on the read direction of the browser. The default value is `stretch `which will stretch the items in the cell thus occupying the entire available width and height. This property position the items with respect to the rows(horizontally).
+
+* `align-items`: Used to position the grid elements vertically inside of the cell. If we set the value of this to `center`, then it will center the items vertically inside of the cell. We can use different values like `start`, `end `etc to adjust the positioning. The default value is `stretch `which you don't need to set.
+
+We can also position the entire contents of the grid inside of the grid container. If we have extra space inside of the grid container we can use properties like:
+
+* `justify-content`: Which positions the entire grid content on the x-axis. We have values like `center `which will center the contents of the grid to the center. Similarly we have `start `which is used by default, end which places the contents at the `end`. The `stretch `have similar effect as start because it is not able to override the row sizes and column sizes we have defined.
+* `align-content`: Used to position the entire grid content across y-axis. We have the same values as above like `start`, `end`, `stretch `etc.
+
+We can also modify the positioning of individual grid items by setting some properties in their respective selectors. Even if we defined the positioning of the elements in the grid container, we can use some of the properties to make individual items looks distinct. They are:
+
+* `justify-self `: Used to position an item on the x-axis inside of a cell. We can use the same values as we used before like `center`, `start`, `end `etc.
+* `align-self `: Used to position an item on the y-axis inside of a cell. We can use the same values as we used before like `center`, `start`, `end `etc.
+
+We should also consider the responsiveness of our grid design. We might need to use media queries to make sure that our grid looks good in mobile screens as well. In some cases the items of the grid becomes very narrow and the content on the screen will not be readable. We might need to adjust the number of rows or columns and fix their positioning based on different layouts. We can use media queries to define different number of rows, columns and their sizes. Using `grid-template-areas `and `grid-areas` to define the grid become easier for this. This way we can change the area template inside of the media queries without making changes to the individual grid elements.
+
+We have already seen that the items of the grid are assigned automatically. By default the sizing of the cells are automatically determined by the grid based on the content in the cell or the neighboring cell. For example in a row if we have two elements and one column of the row have a very large content and the other one have a comparatively smaller content, if we have not specified the row sizes it will automatically take the required height for both the columns to display the content. We can use `grid-auto-rows` to create automatically generated rows. The default value is `auto `which means the size will be auto. If we specify a fixed value for this property, every new row will have this fixed size. This ensures that all rows are equally sized. Alternatively we can use the `minmax() `function to set an automatic height based on the content. For example:
+
+```javaScript
+.container {
+    margin: 20px;
+    display: grid;
+    grid-template-columns: 15rem 15rem;
+    justify-content: center;
+    grid-gap: 1.5rem;
+    grid-auto-rows: minmax(8rem, auto);
+}
+```
+
+We can also do this for columns. We can tell the grid to add new columns instead of creating new rows for new items by using the `grid-auto-flow` property. This property let's us specify where new items should be added. The default value is `row`. If we set this to `column `all the items in the grid will be displayed in separate columns. This may not to give the ideal result, but it is possible and we can use in particular cases.   
+If we set the grid-auto-flow to column then we can set the width of each column by using the `grid-auto-column` property. This will override the values set by the `grid-template-columns` property.  
+ display: grid;
+
+```javaScript
+    display: grid;    
+    grid-auto-flow: column;
+    grid-auto-columns: 5rem;
+```
+
+We have seen that we can define the grid columns and rows manually. You can also set the sizes of the only some rows or columns. For example we can use the `grid-template-row` to set the height of the first row and let the grid automatically allocate the size of other rows. We can think of a grid as an implicit grid and explicit grid. For the explicit grid we define the row and column templates exactly. For the implicit grid the grid automatically allocate items and dimensions automatically for the parts we don't explicitly specify. 
+
+In some cases you want to put the items to cells in a row until they reach the end of the current view port after this only the new items should be placed in new row. We can do this by dynamically generating columns. The autoflow columns is not a solution because it will anyways create new columns without checking the viewport width. We also don't know how many columns we should have because the elements are added dynamically. To fix this we can add a helper value when creating the `grid-template-columns`. Inside of the `repeat()` function we can set the number of times the value need to be repeated to `auto-fill`. 
+
+```javaScript
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 10rem);
+    justify-content: center;
+```
+
+This will automatically place the items in columns based on the screen size. 
+
+To restrict the maximum number of the items (columns) we can set the `max-width` property to the grid container.   
+Alternatively we can use `auto-fit` which works in the same way as `auto-fill` but it will center the contents. The `auto-fit` is useful in cases where we don't have enough content to fit the entire row. In that case it will automatically center the items. 
+
+We have also seen that when we span the grid elements to more than 1 column if there is not adequate space for the item in that row it will be pushed to the next row. This will create empty spaces in the grid. To avoid this behavior and utilize the space efficiently we can specify `dense `to the `grid-auto-flow` property along with the flow direction. It will work for both row and column. This allows us to densely organize our grid, but be aware that this may not be optimal, because we may get accessibility errors. Screen readers normally read the page based on the order of the elements in the DOM from top to bottom. If we change the position like this, the screen readers will interpret the items differently from what you have intended. 
+
+Grids are also commonly used to organize forms. In desktop screens we can use the grid layout to position the label and input fields next to each other. In mobile screens we can use the grids to position the labels above the input fields.   
+It is also fine to use nested grids just like adding flex containers into a grid. 
+
+There are a couple of differences between grid and flex box. 
+
+* CSS Grid is used for 2 dimensional positioning of elements, we used the row and columns. Flex box is used for one dimensional positioning, we either position elements horizontally or vertically using flex direction.
+* A grid is a great choice if you have a real layout with multiple dimensions for example a form.
