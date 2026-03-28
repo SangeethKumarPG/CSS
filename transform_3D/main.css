@@ -1,0 +1,28 @@
+.container {
+    margin: 150px auto;
+    border: 1px solid black;
+    width: 200px;
+    height: 200px;
+    perspective: 1000px;
+    perspective-origin: 500px;
+    position: relative;
+}
+
+.box1 {
+    position: absolute;
+    background: red;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(80deg);
+    color: white;
+}
+
+.box2 {
+    position: absolute;
+    background: blue;
+    width: 100%;
+    height: 100%;
+    /* transform:rotateY(80deg); */
+    transform: translateX(1rem) translateZ(-100rem);
+    color: white;
+}

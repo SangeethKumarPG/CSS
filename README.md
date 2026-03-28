@@ -1585,3 +1585,70 @@ There are a couple of differences between grid and flex box.
 
 * CSS Grid is used for 2 dimensional positioning of elements, we used the row and columns. Flex box is used for one dimensional positioning, we either position elements horizontally or vertically using flex direction.
 * A grid is a great choice if you have a real layout with multiple dimensions for example a form.
+
+We use the `transform `property to apply transformations to the elements. In CSS we have a couple of key transformation such as moving the element.  
+Moving the element with transform is hardware accelerated and will keep the element in document flow. So it recommended to use transforms to move elements. We can use various functions to performs different transforms. Some useful functions are:
+
+* `rotateZ(angle)`: This will rotate the element by the specified degrees around the z axis. We can specify the `transform-origin` property to specify the origin of rotation. By default it is `center`. We can use position values to adjust this. We can also use percentage and pixel values for moving the transform origin. The first value specifies the position in x axis and the next value for the position in the y-axis. If we use just the` rotate()` it will rotate the element along z-axis.
+
+* `translateX()` : Let's you move the element in the x axis. We can use rem, pixels, percentages etc for the values. If we applied a rotation to the element and when we are trying to apply translate on the same element, it will move in direction with respect to the center of the element. So if we had applied a rotation of 45 degrees on the z axis, if we use translateX it will move the element on the x axis which is rotated by 45 degrees, ie it will move diagonally. We can also use negative values to move the element in the opposite direction. If we use just `translate()` it will move the element across x-axis, if we pass a second value it will move the element in y axis also.
+* `translateY()` : Moves the element in y-axis, the values which we can pass to this are also same as that of translateX().
+* `tranlateZ()` : Move an element in z-axis. This will move the element towards us if +ve value and away if -ve value, based on the position of the axis.
+
+We can use the transform translate properties to position badges like:
+
+```javaScript
+.package__badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    font-size: 0.8rem;
+    color: white;
+    background: #ff5454;
+    padding: 0.5rem;
+    transform: rotateZ(45deg) translateX(3.5rem) translateY(-1rem);
+    transform-origin: center;
+    width:12rem;
+    text-align: center;
+}
+```
+
+And then in the parent element we can hide the overflow in the parent element to make it look like a nice badge.  
+` overflow: hidden;` 
+
+* `skew()`: Let's you skew an element on x and y axis. If you only pass one value it will skew on the X axis. If we pass 2 values the first value will be used for x and the next value will be used for y. We pass degrees as values. Skewing is like pulling the element from a direction. We can also set negative values to offset the skew in the opposite direction. We can also apply negative values to cancel out the skewness set to a parent element.
+* `scale()`: Scale the element on 3 axes. The `scaleX()` allows you to scale the width of the element, where as `scaleY()` allows you to scale the height of the element. As values we can pass normal integers to apply the scaling. If we apply normal `scale() `function with only 1 value it will scale on both axes.
+
+For example:
+
+```javaScript
+  .testimonial__image-container{
+    width: 60%;
+    max-width: 40rem;
+    box-shadow: 3px 3px 5px 3px rgba(0, 0, 0, 0.3);
+    transform: skewX(20deg);
+    overflow: hidden;
+  }
+ 
+  .testimonial__image{
+    width: 100%;
+    vertical-align: top;
+    transform: skewX(-20deg) scale(1.4);
+  }
+```
+
+The transformations are useful if we want to modify the elements or if we want, we can use them with animations.
+
+We can also perform 3D transformations also. We have 3 axes for rotation. We can rotate an element across all 3 of these axes. If we set a rotation on the x axis, it will spin around only that axis. i.e, it will rotate the element towards or away from you. This is similar for the y-axis also. But for the z-axis it going through the middle of x and y axis. The z-axis is not highly 3 dimensional because it pierces the element from that axis. Therefore rotate y and x are the two functions which we can use for 3d rotation. 
+
+We can change the perspective from which we are observing the elements rotation. We can use the perspective() function and pass a value in pixels or rem. The smaller the perspective the closer the element.   
+eg:  
+` transform: perspective(10px) rotateX(0deg) rotateY(80deg);`  
+We can also use the `perspective `property instead of the perspective function. It will use the same pixel and rem values. But, the key difference is that we should apply the perspective to the parent element. The advantage of this is that we will get same perspective for all child elements. 
+
+We can change the angle using the `perspective-origin` property. The default value is `center`. We can also use other values like `left right `etc. We can use pixels and rems also. This way the perspective will change towards the center right in the specified pixels. 
+
+By default when you apply a rotation to the parent element, the child elements will also be affected even if they have their own 3D space inside of the parent. The default behavior flattens the 3D space. You can change this behavior using the `transform-style` property. The default value is `flat`. When flat is applied the container rotates and the elements move with the container but they are actually in a flat 3D space. If we use a value such as `preserve-3d` the 3D position of child elements will be preserved.
+
+The `backface-visibility` property can be used to adjust the visibility when flipping the elements. If we set it to `hidden `it will not show the backface of the elements. By default it's value is `visible`. You can use this to hide the back of an element when it is flipping using this.
