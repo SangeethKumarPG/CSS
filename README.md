@@ -1652,3 +1652,70 @@ We can change the angle using the `perspective-origin` property. The default val
 By default when you apply a rotation to the parent element, the child elements will also be affected even if they have their own 3D space inside of the parent. The default behavior flattens the 3D space. You can change this behavior using the `transform-style` property. The default value is `flat`. When flat is applied the container rotates and the elements move with the container but they are actually in a flat 3D space. If we use a value such as `preserve-3d` the 3D position of child elements will be preserved.
 
 The `backface-visibility` property can be used to adjust the visibility when flipping the elements. If we set it to `hidden `it will not show the backface of the elements. By default it's value is `visible`. You can use this to hide the back of an element when it is flipping using this.
+
+Transitions are kind of like built-in animations. Transitions are added by adding the `transition `property, and specifying which other property like the opacity or the position of the element should be watched and animated when it changes.  
+We specify the things such as the element's properties, the initial delay, how long should it take, and the timing function which specifies things like how fast should it start and end. There are certain properties that are supported for transitions you should check them before using.
+
+For example we have a modal with display none by default. When a button is clicked it will change this property using javascript and make the modal visible. We can use transitions for a better approach. We can set the opacity of the modal to 0 and set a `translateY()` property with a value to move the element on y axis. We can then use javascript to make the modal visible by setting the opacity to 1 and set the y-axis position to 0.
+
+This will restore the default behavior but there is no animation visible on the screen. For this we will use the transition property in the selector of the modal. The `transition `property is able to take in a couple of values. You can define up to 4 values here. The first one is which property you want to observe, you can watch all with the `all `keyword. Then the animation will be played whenever a transitionable property changes. We can also add multiple transitionable properties separated by comma. The second value is the duration across which you want to play the animation. We can define it directly after the property you are watching. You specify values in seconds, milliseconds. This way we can set different durations for different properties. CSS will automatically interpolate the value you are coming from and the value you are going to. 
+
+The third value is the timing function which defines how fast it will go through the animation even though it will take the defined duration for the animation. If we want to start the animation fast and end it slowly we can use `ease-out`. To start slower and end faster we can use `ease-in`. The ease-in-out will start slow, fast middle and ends slow. The 4th value is delay which means that it will take the specified delay to start the animation. If you want you can add it.  
+example:
+
+```javaScript
+.modal {
+  ......
+  opacity: 0;
+  transform:translateY(-3rem);
+  transition: opacity 200ms ease-out, transform 500ms ease-out;
+  .......
+}
+.open {
+    display: block !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+```
+
+This will transition smoothly from your starting value to the ending value. Since we are applying the animation to add transforms it will apply to all the values we set using the transform property.
+
+We can think of the duration of the animation as a function, at the beginning no time has passed and the completion of the transition is 0%. As we play the animation it will transition from 0% completion to 100% completion over the given time. If we think of it as a curve we can control this curve to control the behavior of the animation. We can visit the `easings.net` website to learn about the various timing functions in CSS. There are `linear `and `cubic-beizier` . The cubic-beizier function allows you to set your own timing function with 4 parameters defined in the function. This defines a function of time and completion. We can play around with this and visualize these inside of this website and use this value in our transitions. We can also customize this timing function in the developer tools.
+
+The above approach cannot be used for backdrop of the modal. If we set the backdrop's opacity to 0, the backdrop will only be hidden from the user. Since it has a higher z-index value it will be block other elements in the page. We cannot transition the display property change. If we change the display property the transition of the element will not start even if we are using some other property for transition. As a workaround we can set the display property of the element inside of the javascript and using a time out function we can make the element visible. In this 2 step process the element's display property is changed first and then after a short interval the styling class is applied. For removing we should remove the class first then we inside of the timeout function we should set the display property to none, also we should match the time of the function to the transition time we defined. Even though this is not an optimal solution, it will work fine. 
+
+The above method is inconvenient because whenever we change the time of the transition we should also change the javascript code.
+
+The animations in CSS is about animating things with way more control than that of transitions. We can use the transition to change the properties of an element within a specified time. But with animations we can define steps through which the change happens, and in each step we can define how much of the value is changed. This gives us granular control. We define keyframes to get full control of an element at a given point in time.   
+The first step of an animation is the definition of keyframes, we define it using `@keyframes`. We define a set of keyframes which we can use in the css animation. We have to provide a name for the keyframe. After this inside curly braces we define our animation. For the most basic animation we need to provide `from `keyword and `to `keyword. This defines 2 keyframes, the starting state and the ending state. We don't need to use a CSS selector inside of keyframes. 
+
+We just define the properties and the properties will be applied to any element which receives that set of keyframes as an animation. We can any CSS property for the initial state and target state. Even though every property is not animatable, we can still change; it might just jump to the next value immediaetly. What happens behind the scenes is that for a CSS animation CSS will still automatically generate a smooth transition between the starting and target value. We don't need to define the duration of the animation inside of keyframes. After we have specified the keyframe we can add the animation to an element using the `animation `property. For this property we specify the name of the animation, the duration of the animation, we can also add a delay which will delay the animation by the specified time from when the page is loaded. We can also set the animation iterations which will repeat the animation for the specified number of times. 
+
+After this we can also specify the direction which means that after one iteration does it snapback to the starting state and start the next iteration or it alternate and move back to the starting state. The alternate swing also count as iteration. We can also use alternat-reverse which will reverse the starting and beginning keyframes. Another value which we can set for animation is the fill state which determines weather to keep the changes to the properties after the animation is finished. The default is that it is not kept. If we specify as `forwards `it will keep the final state of the animation. This behavior may not be visible if we provide alternate. If we specify backwards it will keep the properties from the starting state of the animation. We can use `both `in which case it will start with the initial keyframe and will end with the value of the last keyframe. The most commonly used value is `forwards `since we might want to keep the changes.  
+Example:
+
+```javaScript
+.main-nav__item--cta{
+    animation: wiggle 200ms 3s 8 alternate forwards;
+}
+@keyframes wiggle {
+    from{
+        transform: rotateZ(0);
+    }
+    to{
+        transform: rotateZ(10deg);
+    }
+}
+```
+
+additionally the last value of the animation can be the state of animation. For playing the animation it is `running`. In the above example we are telling to play the wiggle keyframe set (animation) over a duration of **200ms**. Between two keyframes **start fast and end slow**, also make sure to **wait 1s before you start.** Play **8 animations** and **alternate** after each animation. Once you're done, **keep the final value** applied to the element. Oh, and you should be **playing the animation** \- **not pausing**. We don't need to specify the running because it is the default value. If we want the animation to be paused we can specify the last value as paused.
+
+Instead of from and to we can also use % values. In the above example we can set the `from `to `0%` and `to `to `100%` which is essentially the same. When using the percentages we can add as many in-between steps as we want by specifying other blocks with the percentage values between 0 and 100\. For example we can set a value for 50% when your animation is halfway done.   
+For animation we can still add a timing function the syntax of the animation shorthand is like this.   
+`animation: NAME DURATION DELAY TIMING-FUNCTION ITERATION DIRECTION FILL-MODE PLAY-STATE;` 
+
+The order of the values doesn't matter except for the duration and delay. Since we have control over the frames it might seem redundant to use timing functions, but timing functions here actually defines the timing of transition between the keyframe values.
+
+When we are working with animations of a property that have a value defined in the stylesheet that value will be over ridded by the animation. So if we want to keep that value we should also fix the value in the animation keyframes also.
+
+Using javascript we can listen to certain events that is generated by the animations. We can add an event listener to the element which has the animation and listen to the various changes. We have events such as `animationstart`. For this event listener we will automatically get the event object which contains details about the event. We also have the `animationend `event and `animationiteration`. From the event object we will get more details about the event such as the animation name which we have defined the CSS file. Apart from that we get values like `elapsedTime `which will display the elapsed time for the animation. This can be useful when we want to time something in the javascript code once the animation ended.
