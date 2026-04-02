@@ -1,0 +1,138 @@
+// $main-color: #521751;
+@import "_variables.scss";
+
+@import "typography.scss";
+
+html {
+  font-size: 94.75%;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex:{
+    direction: column;
+    wrap: nowrap;
+  }
+
+  align-items: center;
+  padding: 3rem 0;
+  box-sizing: border-box;
+}
+
+.sass-introduction {
+  border: $border-default;
+  background: lighten($color: map-get($colors, main), $amount: 72%);
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0.2rem 0.2rem 0.1rem #ccc;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.sass-introduction p {
+  margin: 0;
+}
+
+.sass-details {
+  border: $border-default;
+  background: #fae5ff;
+  padding: 1rem;
+  text-align: center;
+  margin: 2rem 0;
+  width: 90%;
+  box-sizing: border-box;
+}
+
+.section-header {
+  border-bottom: 0.05rem solid map-get($map: $colors, $key: main);
+}
+
+.section-header h1 {
+  margin: 0 0 1rem 0;
+}
+
+.documentation-links {
+  list-style: none;
+  margin: 1rem 0 0 0;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+
+  li {
+    margin: 0.2rem 0;
+    background: white;
+  }
+
+  .documentation-link {
+    text-decoration: none;
+    color: map-get($map: $colors, $key: main);
+    display: block;
+    padding: 0.2rem;
+    border: $border-default;
+  }
+
+  .documentation-link:hover,
+  .documentation-link:active {
+    color: white;
+    background: map-get($map: $colors, $key: secondary);
+    border-color: map-get($map: $colors, $key: secondary);
+  }
+
+}
+
+
+.documentation-links .documentation-link {
+  text-decoration: none;
+  color: map-get($map: $colors, $key: main);
+  display: block;
+  padding: 0.2rem;
+  border: 0.05rem solid map-get($map: $colors, $key: main);
+}
+
+
+@media (min-width: 40rem) {
+  html {
+    font-size: 125%;
+  }
+
+  .container {
+    padding: 3rem 0;
+  }
+
+  .sass-introduction,
+  .sass-details {
+    width: 30rem;
+  }
+}
+
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == 'mobile' {
+        @media (max-width: 768px) {
+            @content;
+        }
+    }
+    @else if $breakpoint == 'tablet' {
+        @media (max-width: 1024px) {
+            @content;
+        }
+    }
+}
+
+// Usage:
+.container {
+    @include respond-to('mobile') {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
